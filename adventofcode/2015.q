@@ -78,11 +78,14 @@ count {[x;y]encode0 x}over enlist["J"$/:"1113122113"], til 50
 //Task 12.2 not efficient at all. Complexity must be O(n)
 {sum"J"$" "vs?[x in "\":,{}[]";" ";x]}
 {
-  red: first x ss ":\"red\"";
-  if[null red; :x;];
+  red: x ss ":\"red\"";
+  if[0=count red;:x;];
   brackets: sums 0^("{}"!1 -1)x;
-  brackets: where brackets=-1+brackets red;
-  s: last brackets where red>brackets;
-  e: first brackets where red<brackets;
-  .z.s ((s+1)#x),(e+1) _ x
+  excluded: distinct asc raze {[b;r]
+    b: where b=-1+b@r;
+    s: last b where r>b;
+    e: first b where r<b;
+    s+1+til e-s
+  }[brackets]each red;
+  x@(til count x)except  excluded
 }
