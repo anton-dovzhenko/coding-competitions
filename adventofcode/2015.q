@@ -62,6 +62,18 @@ sum {?[((floor I%1000) within y[1][0 2])&mod[I;1000] within y[1][1 3];y[0]@x;x]}
 ;"NOT y -> i")
 
 
+//Task 9.1
+input: read0 hsym`$"2015_t9_p1.in";
+input: {x, (reverse each key x)!value x} {x[0]!x 1}flip{x:" to " vs x; c0: `$x 0; x: " = " vs x 1; (c0,`$x 0;"J"$x 1)} each input;
+cities: distinct raze key input;
+permutations: {raze {[y;x] i:til 1+count x; ((i#\:x),'y),'i _\:x}[y]each x} over enlist[(cities 0 1;cities 1 0)],2_cities;
+min{sum x@/: y,'next y}[input]each permutations
+//Task 9.2
+//same but take max in the end
+max {sum x@/: y,'next y}[input]each permutations
+
+
+
 //Task 10.1
 encode: {
   d:where 0<>deltas x:"J"$/:x;
