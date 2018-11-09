@@ -101,3 +101,24 @@ count {[x;y]encode0 x}over enlist["J"$/:"1113122113"], til 50
   }[brackets]each red;
   x@(til count x)except  excluded
 }
+
+
+//Task 13.1
+input: read0 hsym `$"C:/adovzhenko/kdb_scripts/aoc/2015_t13_p1.txt";
+input: (!). flip{
+    x:(" "vs x) 0 2 3 10;
+    (`$(x 0;-1_x 3); $["gain"~x 1;1;-1]*"J"$x 2)
+}each input;
+attenders: distinct raze key input;
+
+permutations: {raze {[y;x] i:til 1+count x; ((i#\:x),'y),'i _\:x}[y]each x} over enlist[(attenders 0 1;attenders 1 0)],2_attenders;
+max{sum x@/: (reverse each y),y:(y,'(1_y),y 0)}[input]each permutations
+//Task 13.2
+input: read0 hsym `$"C:/adovzhenko/kdb_scripts/aoc/2015_t13_p2.txt";
+input: (!). flip{
+    x:(" "vs x) 0 2 3 10;
+    (`$(x 0;-1_x 3); $["gain"~x 1;1;-1]*"J"$x 2)
+}each input;
+attenders: (distinct raze key input),`me;
+permutations: {raze {[y;x] i:til 1+count x; ((i#\:x),'y),'i _\:x}[y]each x} over enlist[(attenders 0 1;attenders 1 0)],2_attenders;
+max{sum x@/: (reverse each y),y:(y,'(1_y),y 0)}[input]each permutations
