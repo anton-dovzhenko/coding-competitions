@@ -17,3 +17,11 @@ sum"J"$read0 hsym`$input.dir,"2018_1_1.input"
   d:0=last deltas`int$x 0 1;
   $[1=sum not d; enlist(x 0)@where d;()]
 }each{x cross x}enlist each x}("abcde";"fghij";"klmno";"pqrst";"fguij";"axcye";"wvxyz")
+
+//Task 3.1, 3.2
+.aoc.parse:{x:-2#" " vs x;"J"$(","vs -1_x 0), "x" vs x 1};
+.aoc.size: {max{(x[0]+x[2];x[1]+x[3])} each x};
+data: .aoc.parse each data;
+size: .aoc.size data;
+count where 1<count each group raze {{(x[0]*size 0)+x 1}each (x 0 1) +/: til[x 2] cross til[x 3]}each data
+(til count data) except {distinct raze exec id from select from x where 1<count each id}select id by data from ungroup update id: i from ([]{{(x[0]*size 0)+x 1}each (x 0 1) +/: til[x 2] cross til[x 3]}each data)
