@@ -25,3 +25,8 @@ data: .aoc.parse each data;
 size: .aoc.size data;
 count where 1<count each group raze {{(x[0]*size 0)+x 1}each (x 0 1) +/: til[x 2] cross til[x 3]}each data
 (til count data) except {distinct raze exec id from select from x where 1<count each id}select id by data from ungroup update id: i from ([]{{(x[0]*size 0)+x 1}each (x 0 1) +/: til[x 2] cross til[x 3]}each data)
+
+//Task 5.1
+{-1+count{$[32=abs y-last x;-1_x;x,y]} over 0N,`int$x} each ("aA";"abBA";"abAB";"aabAAB";"dabAcCaCBAcCcaDA")
+//Task 5.2
+{min {-1+count{$[32=abs y-last x;-1_x;x,y]} over 0N,`int$x} each {x except y, upper y}[x]each distinct lower distinct x}
