@@ -1,4 +1,8 @@
 //------------------------------------
+//----- common
+.aoc.common.range: {x[0]+til 1+x[1]-x[0]};
+
+//------------------------------------
 //Task 1.1
 sum"J"$read0 hsym`$input.dir,"2018_1.input"
 //Task 1.2
@@ -71,3 +75,135 @@ count where 1<count each group raze {{(x[0]*size 0)+x 1}each (x 0 1) +/: til[x 2
 0 0 0 0 4 ~
   {min {-1+count{$[32=abs y-last x;-1_x;x,y]} over 0N,`int$x} each {x except y, upper y}[x]each distinct lower distinct x}
   each ("aA";"abBA";"abAB";"aabAAB";"dabAcCaCBAcCcaDA");
+
+
+//------------------------------------
+//Task 6.1
+.aoc.d6.t1: {
+  x: "J"$", "vs/:x;
+  range: flip (min x;max x);
+  p: {x cross y} . .aoc.common.range each range;
+  areas: raze {x: sum each abs x -\:y; x: where x=min x; $[1=count x;first x;()]}[x]'[p];
+  max {key[x]!count each value x}group areas
+ };
+if[not 17~.aoc.d6.t1("1, 1";"1, 6";"8, 3";"3, 4";"5, 5";"8, 9");'"[AssertionException] .aoc.d6.t1"];
+
+
+.aoc.d6.t2: {[x;y]
+  x: "J"$", "vs/:x;
+  range: flip (min x;max x);
+  p: {x cross y} . .aoc.common.range each range;
+  sum{z>sum sum abs x -\:y}[x;;y]'[p]
+ };
+if[not 16=.aoc.d6.t2[("1, 1";"1, 6";"8, 3";"3, 4";"5, 5";"8, 9");32];'"[AssertionException] .aoc.d6.t2"];
+
+
+//------------------------------------
+//Task 7.1 (Topololical sort)
+.aoc.topSort: {
+  last{
+    L: x@1;
+    G: x@0;
+    n: first asc distinct (first each G) except last each G;
+    filtered: G where not G like n,"*";
+    L,:n;
+    if[0=count filtered; L,:asc distinct raze G[;1]];
+    (filtered;L)
+  }/[(x;())]
+ };
+
+.aoc.d7.parse: {{(last x@0;first x@1)}each " must be finished before step "vs/:x};
+
+.aoc.d7.t1: {.aoc.topSort .aoc.d7.parse x};
+if[not "CABDFE"~.aoc.topSort("CA";"CF";"AB";"AD";"BE";"DE";"FE");'"[AssertionException] .aoc.topSort"];
+
+//Task 7.2
+.aoc.d7.t2: {
+  data: .aoc.d7.parse x;
+  sorted: .aoc.topSort data;
+  .tmp.workers: y#0;
+  .tmp.completed: sorted!count[sorted]#0;
+  {
+    c: .tmp.completed y;
+    w: .tmp.workers?first w where w=max w:.tmp.workers where .tmp.workers<c;
+    if[w=count .tmp.workers; w: .tmp.workers?first w where w=min w:.tmp.workers where .tmp.workers>=c];
+    t: (.tmp.workers[w]|.tmp.completed y)+61+(`int$y)-`int$"A";
+    .tmp.workers[w]: t;
+    deps: distinct raze last each x where x like y,"*";
+    .tmp.completed[deps]: .tmp.completed[deps]|t;
+  }[data]each sorted;
+  time: max .tmp.workers;
+  delete workers from `.tmp;
+  delete completed from `.tmp;
+  time
+};
+
+
+//------------------------------------
+//Task 8.1
+.aoc.d8.t1: {
+  x: "J"$" " vs x;
+  first{
+    s: x 0;
+    tree: x 1;
+    n: last tree;
+    data: x 2;
+    if[0=count data;:x];
+    if[0<n 0; :(s;tree,enlist 2#data;2_data)];
+    $[0=n 1
+      ;(s;[tree: -1_tree; tree[-1+count tree]: last[tree] + (-1 0); tree];data)
+      ;(s+sum(n 1)#data;[tree[-1+count tree]: 0 0; tree];(n 1)_data)
+    ]
+  }/[(0;enlist 2#x;2_x)]
+};
+if[not 138~.aoc.d8.t1"2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2";'"[AssertionException] .aoc.d8.t1"];
+
+.aoc.d8.t2: {
+  x: "J"$" " vs x;
+  {
+    //0 - children, 1 - metadata, 2 - children processed, 3 - sum
+    if[0>type x;:x];
+    tree: x 0;
+    n: last tree;
+    data: x 1;
+
+    s: $[0=n 0;sum(n 1)#data;$[0=n 2;sum(n 3)@-1+(n 1)#data;0N]];
+    $[any 0= n 0 2
+      ; [tree: -1_tree
+        ; if[0=count tree; :s]
+        ; tree[-1+count tree;3],: s
+        ; tree[-1+count tree;2]-: 1
+        ; (tree;(n 1)_data)
+      ]
+      ; (tree, enlist (data 0 1 0), enlist 0#0N;2_data)
+    ]
+  }/[(enlist(x 0;x 1;x 0; 0#0N);2_x)]
+};
+if[not 66~.aoc.d8.t1"2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2";'"[AssertionException] .aoc.d8.t2"];
+
+
+//------------------------------------
+//Task 9.1
+{
+if[1600<x`l;:x];
+    m: x`m;
+$[0=m mod 23
+;[
+a: (x[`a]-7) mod count x`c;
+l: m+x[`c]@a;
+            c: (a#x`c),((a+1)_ x`c);
+            if[a=count c;a:0]
+        ]
+        ;[
+            a: (x[`a]+2) mod count x`c;
+            if[a=0;a:count x`c];
+l: 0;
+c: (a#x`c),m,(a _ x`c);
+]
+];
+s: l+x`s;
+    p: x`p;
+p[x`e]+:l;
+    `m`c`a`e`p`s`l!(m+1;c;a;(1+x`e) mod count x`p;p;s;l)
+
+}/[`m`c`a`e`p`s`l!(2;0 1;1;2;10#0;0;0)]
