@@ -207,3 +207,37 @@ p[x`e]+:l;
     `m`c`a`e`p`s`l!(m+1;c;a;(1+x`e) mod count x`p;p;s;l)
 
 }/[`m`c`a`e`p`s`l!(2;0 1;1;2;10#0;0;0)]
+
+
+
+//------------------------------------
+//Task 10.1
+data: read0 hsym`$input.dir,"2018_10.input";
+positions: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each data;
+velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
+
+.aoc.d8.t2: {
+  first {
+    s: x 0; //second
+    p: x 1; //current positions
+    v: x 2; //velocities
+    a: x 3; //rectangle area
+    p: p+v;
+    b:(min p;max p); //boundaries;
+    area: prd last deltas b;
+    $[area>a;x;(s+1;p;v;area)]
+  }/[(0;x;y;0W)]
+ };
+
+.aoc.d8.sec: .aoc.d8.t2[positions;velocities];
+.aoc.d8.t1: {
+  b:(min x;max x);
+  w: 1+b[1;0]-b[0;0];
+  h: 1+b[1;1]-b[0;1];
+  c: (h*w)#"_";
+  pos:{y[0]+x*y[1]}[w]'[x-\:b 0];
+  c[pos]: "a";
+  c: w cut c;
+  ("\n","\n" sv c),"\n"
+ };
+.aoc.d8.message: .aoc.d8.t1 positions+'.aoc.d8.sec*velocities;
