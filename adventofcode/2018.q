@@ -86,8 +86,6 @@ count where 1<count each group raze {{(x[0]*size 0)+x 1}each (x 0 1) +/: til[x 2
   areas: raze {x: sum each abs x -\:y; x: where x=min x; $[1=count x;first x;()]}[x]'[p];
   max {key[x]!count each value x}group areas
  };
-if[not 17~.aoc.d6.t1("1, 1";"1, 6";"8, 3";"3, 4";"5, 5";"8, 9");'"[AssertionException] .aoc.d6.t1"];
-
 
 .aoc.d6.t2: {[x;y]
   x: "J"$", "vs/:x;
@@ -95,7 +93,6 @@ if[not 17~.aoc.d6.t1("1, 1";"1, 6";"8, 3";"3, 4";"5, 5";"8, 9");'"[AssertionExce
   p: {x cross y} . .aoc.common.range each range;
   sum{z>sum sum abs x -\:y}[x;;y]'[p]
  };
-if[not 16=.aoc.d6.t2[("1, 1";"1, 6";"8, 3";"3, 4";"5, 5";"8, 9");32];'"[AssertionException] .aoc.d6.t2"];
 
 
 //------------------------------------
@@ -115,7 +112,6 @@ if[not 16=.aoc.d6.t2[("1, 1";"1, 6";"8, 3";"3, 4";"5, 5";"8, 9");32];'"[Assertio
 .aoc.d7.parse: {{(last x@0;first x@1)}each " must be finished before step "vs/:x};
 
 .aoc.d7.t1: {.aoc.topSort .aoc.d7.parse x};
-if[not "CABDFE"~.aoc.topSort("CA";"CF";"AB";"AD";"BE";"DE";"FE");'"[AssertionException] .aoc.topSort"];
 
 //Task 7.2
 .aoc.d7.t2: {
@@ -156,7 +152,6 @@ if[not "CABDFE"~.aoc.topSort("CA";"CF";"AB";"AD";"BE";"DE";"FE");'"[AssertionExc
     ]
   }/[(0;enlist 2#x;2_x)]
 };
-if[not 138~.aoc.d8.t1"2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2";'"[AssertionException] .aoc.d8.t1"];
 
 .aoc.d8.t2: {
   x: "J"$" " vs x;
@@ -179,7 +174,6 @@ if[not 138~.aoc.d8.t1"2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2";'"[AssertionException
     ]
   }/[(enlist(x 0;x 1;x 0; 0#0N);2_x)]
 };
-if[not 66~.aoc.d8.t1"2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2";'"[AssertionException] .aoc.d8.t2"];
 
 
 //------------------------------------
@@ -246,7 +240,7 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
 //------------------------------------
 //Task 11
 .aoc.d11.prepare: {[size;serial]
-  matrix: (1+ til size)cross 1+til size;
+  matrix: (1+til size) cross 1+til size;
   levels: size cut {
     ID: y[0]+10;
     lvl: ID*y[1];
@@ -258,20 +252,20 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
   sums levels
  };
 
-.aoc.d11.task1: {[size;serial;squareSize]
+.aoc.d11.t1: {[size;serial;squareSize]
   levelSums: .aoc.d11.prepare[size;serial];
-  `energy xdesc flip`energy`x`y`size ! flip raze
-    {[x;y;i;j] (sum x[i+y;j+til y]-0^x[i;j+til y];i+1;j+1;y) }
+  1#`energy xdesc flip`energy`x`y`size ! flip raze
+    {[x;y;i;j](sum x[i+y-1;j+til y]-0^x[i-1;j+til y];i+1;j+1;y)}
       [levelSums;squareSize]'[til size+1-squareSize]'[til size+1-squareSize]
  };
 
-.aoc.d11.task2: {[size;serial]
+.aoc.d11.t2: {[size;serial]
   levelSums: .aoc.d11.prepare[size;serial];
   1#`energy xdesc raze {[levelSums;size;squareSize]
     0N!"processing size ",string squareSize;
     1#`energy xdesc flip`energy`x`y`size ! flip raze
-    {[x;y;i;j](sum x[i+y;j+til y]-0^x[i;j+til y];i+1;j+1;y)}
-      [levelSums;squareSize]'[til size+1-squareSize]'[til size+1-squareSize]
+      {[x;y;i;j](sum x[i+y-1;j+til y]-0^x[i-1;j+til y];i+1;j+1;y)}
+        [levelSums;squareSize]'[til size+1-squareSize]'[til size+1-squareSize]
   }[levelSums;size] each 1+til size
  };
 
