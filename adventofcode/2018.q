@@ -241,3 +241,37 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
   ("\n","\n" sv c),"\n"
  };
 .aoc.d8.message: .aoc.d8.t1 positions+'.aoc.d8.sec*velocities;
+
+
+//------------------------------------
+//Task 11
+.aoc.d11.prepare: {[size;serial]
+  matrix: (1+ til size)cross 1+til size;
+  levels: size cut {
+    ID: y[0]+10;
+    lvl: ID*y[1];
+    lvl: lvl+x;
+    lvl: ID*lvl;
+    lvl: floor mod[lvl;1000]%100;
+    lvl-5
+  }[serial]each matrix;
+  sums levels
+ };
+
+.aoc.d11.task1: {[size;serial;squareSize]
+  levelSums: .aoc.d11.prepare[size;serial];
+  `energy xdesc flip`energy`x`y`size ! flip raze
+    {[x;y;i;j] (sum x[i+y;j+til y]-0^x[i;j+til y];i+1;j+1;y) }
+      [levelSums;squareSize]'[til size+1-squareSize]'[til size+1-squareSize]
+ };
+
+.aoc.d11.task2: {[size;serial]
+  levelSums: .aoc.d11.prepare[size;serial];
+  1#`energy xdesc raze {[levelSums;size;squareSize]
+    0N!"processing size ",string squareSize;
+    1#`energy xdesc flip`energy`x`y`size ! flip raze
+    {[x;y;i;j](sum x[i+y;j+til y]-0^x[i;j+til y];i+1;j+1;y)}
+      [levelSums;squareSize]'[til size+1-squareSize]'[til size+1-squareSize]
+  }[levelSums;size] each 1+til size
+ };
+
