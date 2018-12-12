@@ -269,3 +269,39 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
   }[levelSums;size] each 1+til size
  };
 
+
+//------------------------------------
+//Task 12
+.aoc.d12.parse: {
+    data: read0 hsym`$x;
+    state: 15_data 0;
+    patterns: 2_data;
+    patterns: patterns where patterns like "*#";
+    state: "#"=state;
+    patterns: "#"=5#'patterns;
+    patterns: 2 sv/:"J"$string patterns;
+    `state`patterns!(state;patterns)
+ };
+
+.aoc.d12.nextGen: {[patterns;maxGen;x]
+    //x@0 - iteration number
+    //x@1 - offset
+    //x@2 plants
+    i: x 0;
+    if[i~maxGen+1;:x];
+    o: x 1;
+    ng: x 2;
+    ng: 0000b,ng,0000b;
+    ng: ng (til -2+count ng)+\:til 5;
+    ng: (2 sv/:"J"$string ng) in patterns;
+    p: where ng;
+    ng: (1+last[p]-first p)#first[p] _ng;
+    if[ng~x 2;:x];
+    (i+1;-2+o+first p;ng)
+ };
+
+.aoc.d12.t1: {[file;gen]
+    data: .aoc.d12.parse file;
+    rs: .aoc.d12.nextGen[data`patterns;gen]/[(1;0;data`state)];
+    sum rs[1] + where rs 2
+ };
