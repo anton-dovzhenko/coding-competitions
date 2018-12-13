@@ -23,3 +23,8 @@ if[not (`energy`x`y`size!enlist each(83;233;268;13))~flip .aoc.d11.t2[300;6392];
 //Task 12
 if[not 325=.aoc.d12.t1[input.dir,"2018_12.input0";20]; '"[AssertionException] .aoc.d12.t1 case 1"];
 if[not 3258=.aoc.d12.t1[input.dir,"2018_12.input";20]; '"[AssertionException] .aoc.d12.t1 case 2"];
+
+//------------------------------------
+//Task 12
+if[not "7,3"~.aoc.d13.t1[input.dir,"2018_13.input0"]; '"[AssertionException] .aoc.d13.t1 case 1"];
+if[not "16,45"~.aoc.d13.t1[input.dir,"2018_13.input"]; '"[AssertionException] .aoc.d13.t1 case 2"];

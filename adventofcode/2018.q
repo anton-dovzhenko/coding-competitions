@@ -284,9 +284,9 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
  };
 
 .aoc.d12.nextGen: {[patterns;maxGen;x]
-    //x@0 - iteration number
+    //x@0 - next generation number
     //x@1 - offset
-    //x@2 plants
+    //x@2 - generation state
     i: x 0;
     if[i~maxGen+1;:x];
     o: x 1;
@@ -304,4 +304,53 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
     data: .aoc.d12.parse file;
     rs: .aoc.d12.nextGen[data`patterns;gen]/[(1;0;data`state)];
     sum rs[1] + where rs 2
+ };
+
+
+//------------------------------------
+//Task 13
+
+//(left;straight;right)
+.aoc.d13.static.options: (">v<^"!"^>v<";">v<^"!">v<^";">v<^"!"v<^>");
+.aoc.d13.static.move: ">v<^"!(0 1;1 0; 0 -1;-1 0);
+.aoc.d13.static.rounds: ("v\\";"v\/";"^\/";"^\\";">\\";">\/";"<\\";"<\/")!"><><v^^v";
+
+.aoc.d13.parse: {
+    data: read0 hsym`$x;
+    map: {x^("<>^v"!"--||")x}each data;
+    carts: where each data in "^v><";
+    carts: (carts;til count carts);
+    carts: carts@\:where not 0=count each carts 0;
+    carts: flip carts;
+    carts: raze{x[1],'x 0}each carts;
+    cartDirections: {data[x 0;x 1]}each carts;
+    `map`carts`cartDirections!(map;carts;cartDirections)
+ };
+
+.aoc.d13.t1: {
+    data: .aoc.d13.parse x;
+    result: {[x;y]
+    //y 0 - cart options count
+    //y 1 - cart directions
+    //y 2 - cart positions
+    if[(count y 2)>count distinct y 2;:y];
+        y: {
+            o: y 0;
+            d: y 1;
+            p: y 2;
+            map: first x[p 0;p 1];
+            $[map="+"
+                ; [d: (.aoc.d13.static.options@o mod 3)d; o:o+1]
+                ; $[map in "\\\/"
+                    ; d: .aoc.d13.static.rounds@d,map
+                    ;
+                ]
+            ];
+            p+:.aoc.d13.static.move d;
+            (o;d;p)
+       } [x] each flip y;
+       flip y
+    }[data`map]/[((count data`carts)#0;data`cartDirections;data`carts)];
+    collides:  {x where 1<count each x}value group result 2;
+    {x[1],",",x 0}string result[2] first raze collides
  };
