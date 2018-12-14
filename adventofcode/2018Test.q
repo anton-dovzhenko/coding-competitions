@@ -25,6 +25,18 @@ if[not 325=.aoc.d12.t1[input.dir,"2018_12.input0";20]; '"[AssertionException] .a
 if[not 3258=.aoc.d12.t1[input.dir,"2018_12.input";20]; '"[AssertionException] .aoc.d12.t1 case 2"];
 
 //------------------------------------
-//Task 12
+//Task 13
 if[not "7,3"~.aoc.d13.t1[input.dir,"2018_13.input0"]; '"[AssertionException] .aoc.d13.t1 case 1"];
 if[not "16,45"~.aoc.d13.t1[input.dir,"2018_13.input"]; '"[AssertionException] .aoc.d13.t1 case 2"];
+
+
+//------------------------------------
+//Task 14
+if[not"5158916779"~.aoc.d14.t1[3 7;0 1;9;10]; '"[AssertionException] .aoc.d13.t1 case 1"];
+if[not"0124515891"~.aoc.d14.t1[3 7;0 1;5;10]; '"[AssertionException] .aoc.d13.t1 case 2"];
+if[not"9251071085"~.aoc.d14.t1[3 7;0 1;18;10]; '"[AssertionException] .aoc.d13.t1 case 3"];
+if[not"5941429882"~.aoc.d14.t1[3 7;0 1;2018;10]; '"[AssertionException] .aoc.d13.t1 case 4"];
+if[not 9=.aoc.d14.t2[3 7;"51589"]; '"[AssertionException] .aoc.d13.t2 case 1"];
+if[not 5=.aoc.d14.t2[3 7;"01245"]; '"[AssertionException] .aoc.d13.t2 case 2"];
+if[not 18=.aoc.d14.t2[3 7;"92510"]; '"[AssertionException] .aoc.d13.t2 case 3"];
+if[not 2018=.aoc.d14.t2[3 7;"59414"]; '"[AssertionException] .aoc.d13.t2 case 4"];

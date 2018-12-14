@@ -330,10 +330,10 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
 .aoc.d13.t1: {
     data: .aoc.d13.parse x;
     result: {[x;y]
-    //y 0 - cart options count
-    //y 1 - cart directions
-    //y 2 - cart positions
-    if[(count y 2)>count distinct y 2;:y];
+        //y 0 - cart options count
+        //y 1 - cart directions
+        //y 2 - cart positions
+        if[(count y 2)>count distinct y 2;:y];
         y: {
             o: y 0;
             d: y 1;
@@ -353,4 +353,42 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
     }[data`map]/[((count data`carts)#0;data`cartDirections;data`carts)];
     collides:  {x where 1<count each x}value group result 2;
     {x[1],",",x 0}string result[2] first raze collides
+ };
+
+
+//------------------------------------
+//Task 14
+.aoc.d14.t1: {[recipes;current;recipeOffset;recipeLimit]
+    raze string recipeLimit#recipeOffset _ last
+    {
+        //y@0 - current recipes (active)
+        //y@1 - recipe scores
+
+        //log progress
+        if[mod[count y 1;10000]=0;0N!count y 1];
+
+        if[x<=count y 1;:y];
+        c: y[1]@y[0];
+        y[1],: "J"$/:string sum c;
+        y[0]: (y[0]+c+1) mod count y[1];
+        y
+    }[recipeOffset+recipeLimit]/[(current;recipes)]
+ };
+
+.aoc.d14.t2: {[recipes;sequence]
+    //global list is used to avoid unnecessary copying when running `over` function.
+    .tmp.recipes: recipes;
+    {[x;y]
+        //y@0 - current recipes (active)
+        //y@1 - current iteration (helps to avoid convergence until sequence is found)
+        //y@2 - recipes tail to be inspected for sequence
+        if[0<count (raze string (neg y[2]+count x)#.tmp.recipes) ss x;:y];
+        c: .tmp.recipes@y[0];
+        appx: "J"$/:string sum c;
+        .tmp.recipes,: appx;
+        ((y[0]+c+1) mod count .tmp.recipes;1+y 1;count appx)
+    }[sequence]/[(0 1;0;0)];
+    offset: first (raze string .tmp.recipes) ss sequence;
+    delete recipes from `.tmp;
+    offset
  };
