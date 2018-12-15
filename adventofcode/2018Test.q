@@ -1,6 +1,6 @@
 //------------------------------------
 //Task 6
-if[not 17~.aoc.d6.t1("1, 1";"1, 6";"8, 3";"3, 4";"5, 5";"8, 9"); '"[AssertionException] .aoc.d6.t1"];
+if[not 17=.aoc.d6.t1("1, 1";"1, 6";"8, 3";"3, 4";"5, 5";"8, 9"); '"[AssertionException] .aoc.d6.t1"];
 if[not 16=.aoc.d6.t2[("1, 1";"1, 6";"8, 3";"3, 4";"5, 5";"8, 9");32]; '"[AssertionException] .aoc.d6.t2"];
 
 //------------------------------------
@@ -9,8 +9,16 @@ if[not "CABDFE"~.aoc.topSort("CA";"CF";"AB";"AD";"BE";"DE";"FE"); '"[AssertionEx
 
 //------------------------------------
 //Task 8
-if[not 138~.aoc.d8.t1"2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2"; '"[AssertionException] .aoc.d8.t1"];
-if[not 66~.aoc.d8.t1"2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2"; '"[AssertionException] .aoc.d8.t2"];
+if[not 138=.aoc.d8.t1"2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2"; '"[AssertionException] .aoc.d8.t1"];
+if[not 66=.aoc.d8.t1"2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2"; '"[AssertionException] .aoc.d8.t2"];
+
+//------------------------------------
+//Task 9
+if[not 8317=.aoc.d9.t1[10;1618]; '"[AssertionException] .aoc.d9.t1"];
+if[not 146373=.aoc.d9.t1[13;7999]; '"[AssertionException] .aoc.d9.t1"];
+if[not 2764=.aoc.d9.t1[17;1104]; '"[AssertionException] .aoc.d9.t1"];
+if[not 54718=.aoc.d9.t1[21;6111]; '"[AssertionException] .aoc.d9.t1"];
+if[not 37305=.aoc.d9.t1[30;5807]; '"[AssertionException] .aoc.d9.t1"];
 
 //------------------------------------
 //Task 11

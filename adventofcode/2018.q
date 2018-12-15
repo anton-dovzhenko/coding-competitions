@@ -177,31 +177,47 @@ count where 1<count each group raze {{(x[0]*size 0)+x 1}each (x 0 1) +/: til[x 2
 
 
 //------------------------------------
-//Task 9.1
-{
-if[1600<x`l;:x];
-    m: x`m;
-$[0=m mod 23
-;[
-a: (x[`a]-7) mod count x`c;
-l: m+x[`c]@a;
-            c: (a#x`c),((a+1)_ x`c);
-            if[a=count c;a:0]
-        ]
-        ;[
-            a: (x[`a]+2) mod count x`c;
-            if[a=0;a:count x`c];
-l: 0;
-c: (a#x`c),m,(a _ x`c);
-]
-];
-s: l+x`s;
-    p: x`p;
-p[x`e]+:l;
-    `m`c`a`e`p`s`l!(m+1;c;a;(1+x`e) mod count x`p;p;s;l)
+//Task 9
+// Sub tasks 1 and 2 are same
+// Absense of linked-list makes solution very slow
+.aoc.d9.t1: {[players;lastMarble]
+    .tmp.m: 0 2 1;
+    .tmp.p: players#0;
+    {
+        //x@0 - active marble index
+        //x@1 - next marble
+        a: y 0;
+        n: y 1;
+        //logging progress
+        if[0=n mod 10000;0N!n];
 
-}/[`m`c`a`e`p`s`l!(2;0 1;1;2;10#0;0;0)]
+        if[n=x+1;:y];
+        c: count .tmp.m;
+        if[0=n mod 23
+            ; del: (a-7) mod c
+            ; .tmp.p[n mod count .tmp.p]+: .tmp.m[del]+n
+            ; .tmp.m: (del#.tmp.m), (del+1)_.tmp.m
+            ; a: del mod -1+c
+            ; :(a;n+1)
+        ];
 
+        $[a=c-2
+            ; [.tmp.m,:n; a: c]
+            ; $[a=c-1
+                ;[.tmp.m: .tmp.m[0],n,1_.tmp.m; a:1]
+                ;[.tmp.m: ((a+2)#.tmp.m),n,(a+2)_.tmp.m; a: a+2]
+            ]
+        ];
+        (a;n+1)
+
+    }[lastMarble]/[(1;3)];
+    high: max .tmp.p;
+    delete m from `.tmp;
+    delete p from `.tmp;
+    high
+ };
+
+.aoc.d9.t2: .aoc.d9.t1;
 
 
 //------------------------------------
@@ -210,7 +226,7 @@ data: read0 hsym`$input.dir,"2018_10.input";
 positions: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each data;
 velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
 
-.aoc.d8.t2: {
+.aoc.d10.t2: {
   first {
     s: x 0; //second
     p: x 1; //current positions
@@ -223,8 +239,8 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
   }/[(0;x;y;0W)]
  };
 
-.aoc.d8.sec: .aoc.d8.t2[positions;velocities];
-.aoc.d8.t1: {
+.aoc.d10.sec: .aoc.d8.t2[positions;velocities];
+.aoc.d10.t1: {
   b:(min x;max x);
   w: 1+b[1;0]-b[0;0];
   h: 1+b[1;1]-b[0;1];
@@ -234,7 +250,7 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
   c: w cut c;
   ("\n","\n" sv c),"\n"
  };
-.aoc.d8.message: .aoc.d8.t1 positions+'.aoc.d8.sec*velocities;
+.aoc.d10.message: .aoc.d10.t1 positions+'.aoc.d10.sec*velocities;
 
 
 //------------------------------------
