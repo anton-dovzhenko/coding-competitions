@@ -19,6 +19,7 @@ if[not 146373=.aoc.d9.t1[13;7999]; '"[AssertionException] .aoc.d9.t1"];
 if[not 2764=.aoc.d9.t1[17;1104]; '"[AssertionException] .aoc.d9.t1"];
 if[not 54718=.aoc.d9.t1[21;6111]; '"[AssertionException] .aoc.d9.t1"];
 if[not 37305=.aoc.d9.t1[30;5807]; '"[AssertionException] .aoc.d9.t1"];
+if[not 3349098263=.aoc.d9.t1[427;7072300]; '"[AssertionException] .aoc.d9.t2"];
 
 //------------------------------------
 //Task 11
