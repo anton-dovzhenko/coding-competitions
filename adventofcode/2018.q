@@ -378,7 +378,7 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
     carts: carts@\:where not 0=count each carts 0;
     carts: flip carts;
     carts: raze{x[1],'x 0}each carts;
-    cartDirections: {data[x 0;x 1]}each carts;
+    cartDirections: {x[y 0;y 1]}[data] each carts;
     `map`carts`cartDirections!(map;carts;cartDirections)
  };
 
@@ -408,6 +408,39 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
     }[data`map]/[((count data`carts)#0;data`cartDirections;data`carts)];
     collides:  {x where 1<count each x}value group result 2;
     {x[1],",",x 0}string result[2] first raze collides
+ };
+
+.aoc.d13.t2: {
+    data: .aoc.d13.parse x;
+    result: {[x;y]
+        //y 0 - cart options count
+        //y 1 - cart directions
+        //y 2 - cart positions
+        collides: raze collides where 1<count each collides:value group y 2;
+        if[0<count collides
+            ; leftIndex: til[count y 2] except collides
+            ; y[0]: y[0]@leftIndex
+            ; y[1]: y[1]@leftIndex
+            ; y[2]: y[2]@leftIndex];
+        if[1=count y 2;:y];
+        y: {
+            o: y 0;
+            d: y 1;
+            p: y 2;
+            map: first x[p 0;p 1];
+            $[map="+"
+                ; [d: (.aoc.d13.static.options@o mod 3)d; o:o+1]
+                ; $[map in "\\\/"
+                    ; d: .aoc.d13.static.rounds@d,map
+                    ;
+                ]
+            ];
+            p+:.aoc.d13.static.move d;
+            (o;d;p)
+       } [x] each flip y;
+       flip y
+    }[data`map]/[((count data`carts)#0;data`cartDirections;data`carts)];
+    result
  };
 
 
@@ -472,7 +505,7 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
     .opcode.borr: {register[z]: .bitwise.or[register x;register y]};
     .opcode.bori: {register[z]: .bitwise.or[register x;y]};
     .opcode.setr: {register[z]: register x};
-    .opcode.seti: {.debug.seti: (x;y;z); register[z]: x};
+    .opcode.seti: {register[z]: x};
     .opcode.gtir: {register[z]: `int$x>register y};
     .opcode.gtri: {register[z]: `int$register[x]>y};
     .opcode.gtrr: {register[z]: `int$register[x]>register y};
@@ -511,7 +544,6 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
     programme: "J"$" "vs/:programme;
     sampleMatches: {[sample]
         (sample[1;0];raze {[x;y]
-            .debug.last: (x;y);
             register:: x 0;
             (get y) . 1_x 1;
             $[register~x 2;y;()]

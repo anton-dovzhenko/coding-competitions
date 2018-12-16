@@ -37,7 +37,7 @@ if[not 3258=.aoc.d12.t1[input.dir,"2018_12.input";20]; '"[AssertionException] .a
 //Task 13
 if[not "7,3"~.aoc.d13.t1[input.dir,"2018_13.input0"]; '"[AssertionException] .aoc.d13.t1 case 1"];
 if[not "16,45"~.aoc.d13.t1[input.dir,"2018_13.input"]; '"[AssertionException] .aoc.d13.t1 case 2"];
-
+if[not "6,4"~.aoc.d13.t2[input.dir,"2018_13.input1"]; '"[AssertionException] .aoc.d13.t2 case 1"];
 
 //------------------------------------
 //Task 14
