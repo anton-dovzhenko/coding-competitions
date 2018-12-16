@@ -447,3 +447,91 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
     delete recipes from `.tmp;
     offset
  };
+
+
+//------------------------------------
+//Task 16
+.aoc.d16.init: {
+    .bitwise.op: {[op;x;y]
+        x: $[x~0;0b;`boolean$2 vs x];
+        y: $[y~0;0b;`boolean$2 vs y];
+        xc: count x;
+        yc: count y;
+        $[xc<yc; x: ((yc-xc)#0b),x; y: ((yc-xc)#0b),y];
+        2 sv op . (x;y)
+     };
+    .bitwise.and: .bitwise.op[&];
+    .bitwise.or: .bitwise.op[|];
+
+    .opcode.addr: {register[z]: register[x]+register[y]};
+    .opcode.addi: {register[z]: register[x]+y};
+    .opcode.mulr: {register[z]: register[x]*register[y]};
+    .opcode.muli: {register[z]: register[x]*y};
+    .opcode.banr: {register[z]: .bitwise.and[register x;register y]};
+    .opcode.bani: {register[z]: .bitwise.and[register x;y]};
+    .opcode.borr: {register[z]: .bitwise.or[register x;register y]};
+    .opcode.bori: {register[z]: .bitwise.or[register x;y]};
+    .opcode.setr: {register[z]: register x};
+    .opcode.seti: {.debug.seti: (x;y;z); register[z]: x};
+    .opcode.gtir: {register[z]: `int$x>register y};
+    .opcode.gtri: {register[z]: `int$register[x]>y};
+    .opcode.gtrr: {register[z]: `int$register[x]>register y};
+    .opcode.eqir: {register[z]: `int$x~register y};
+    .opcode.eqri: {register[z]: `int$register[x]~y};
+    .opcode.eqrr: {register[z]: `int$register[x]~ register y};
+
+    .tmp.functions: `$".opcode.",/:string {x where not null x}(key `.opcode);
+
+ };
+
+.aoc.d16.destroy: {
+    delete from `.opcode;
+    delete from `.bitwise;
+    delete from `.tmp;
+    delete register from `.
+ };
+
+.aoc.d16.t1: {[data]
+    .aoc.d16.init`;
+    samples: {("J"$", "vs -1_9_ x 0;"J"$" "vs x 1;"J"$", "vs -1_9_ x 2)}each 4 cut data;
+    sampleMatches: {[sample]
+        raze {[x;y]
+            register:: x 0;
+            (get y) . 1_x 1;
+            $[register~x 2;y;()]
+        }[sample]each .tmp.functions
+     } each samples;
+     .aoc.d16.destroy`;
+     count where 3<=count each sampleMatches
+ };
+
+.aoc.d16.t2: {[samples;programme]
+    .aoc.d16.init`;
+    samples: {("J"$", "vs -1_9_ x 0;"J"$" "vs x 1;"J"$", "vs -1_9_ x 2)}each 4 cut samples;
+    programme: "J"$" "vs/:programme;
+    sampleMatches: {[sample]
+        (sample[1;0];raze {[x;y]
+            .debug.last: (x;y);
+            register:: x 0;
+            (get y) . 1_x 1;
+            $[register~x 2;y;()]
+        }[sample]each .tmp.functions)
+     } each samples;
+    sampleMatches: flip`code`func!flip sampleMatches;
+
+    oppcodeTable: first {
+        if[0=count x[1];:x];
+        nextCode: distinct select code, raze func from x[1] where 1=count each func;
+        matchesLeft: delete from x[1] where code in nextCode`code;
+        matchesLeft: update func: func except\:raze nextCode`func from matchesLeft;
+        (x[0] uj nextCode;matchesLeft)
+    }/[(([]code: `long$();func: `$()); sampleMatches)];
+
+    register:: 4#0;
+    {f: x@y 0; f . 1_y;}[(!). oppcodeTable`code`func]each programme;
+
+    fr: first register;
+    .aoc.d16.destroy`;
+    fr
+ };
+
