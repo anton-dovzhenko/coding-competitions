@@ -220,45 +220,44 @@ count where 1<count each group raze {{(x[0]*size 0)+x 1}each (x 0 1) +/: til[x 2
 
 //Task 9.2 Same task implemented with circle-like structure
 .aoc.d9.t2: {[players;lastMarble]
-    //dictionary key is marble. value is an array of 2 elements, which references to left and right marbles.
-    .tmp.circle: (`u#til lastMarble)!lastMarble#enlist 0#0N;
-    .tmp.circle[0]: 1 2;
-    .tmp.circle[1]: 2 0;
-    .tmp.circle[2]: 0 1;
+    .tmp.left: (1+lastMarble)#0N;
+    .tmp.right: (1+lastMarble)#0N;
+    .tmp.left[0 1 2]: 1 2 0;
+    .tmp.right[0 1 2]: 2 0 1;
     .tmp.p: players#0;
+    .tmp.til7: til 7;
     {
         //y@0 - current marble
         //y@1 - next marble
-
-        if[0=y[1]mod 10000; 0N!y[1]%1000];
+        if[0=y[1]mod 100000; 0N!y[1]%100000];
         if[(x+1)=y 1;:y];
 
         if[0=y[1] mod 23
-            ; rem: {[x;y] (.tmp.circle x) 0}over y[0],til 7
-            ; ref: .tmp.circle rem
+            ; rem: {[x;y].tmp.left x}over y[0],.tmp.til7
             ; .tmp.p[y[1] mod count .tmp.p]+: y[1]+rem
-            ; left: .tmp.circle ref 0
-            ; right: .tmp.circle ref 1
-            ; .tmp.circle[ref 0]: (left 0;ref 1)
-            ; .tmp.circle[ref 1]: (ref 0;right 1)
-            ; :(ref 1;1+y 1)
+            ; .tmp.right[.tmp.left rem]: .tmp.right rem
+            ; .tmp.left[.tmp.right rem]: .tmp.left rem
+            ; :(.tmp.right rem;1+y 1)
         ];
 
-        ref: .tmp.circle y 0;
-        rightRef: .tmp.circle ref 1;
-        nextRightRef: .tmp.circle rightRef 1;
-        .tmp.circle[y 1]: (ref 1;rightRef 1);
-        .tmp.circle[ref 1]: (rightRef 0;y 1);
-        .tmp.circle[rightRef 1]: (y 1;nextRightRef 1);
+        right: .tmp.right y 0;
+        rightNext: .tmp.right right;
+
+        .tmp.left[y 1]: right;
+        .tmp.right[y 1]: rightNext;
+
+        .tmp.right[right]: y 1;
+        .tmp.left[rightNext]: y 1;
 
         (y 1;1+y 1)
     }[lastMarble]/[(2;3)];
     high: max .tmp.p;
-    delete circle from `.tmp;
+    delete left from `.tmp;
+    delete right from `.tmp;
     delete p from `.tmp;
+    delete til7 from `.tmp;
     high
  };
-
 
 //------------------------------------
 //Task 10.1
