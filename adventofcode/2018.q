@@ -567,3 +567,61 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
     fr
  };
 
+
+//------------------------------------
+//Task 18
+.aoc.d16.nextAcr: {
+    a: x[y;z];
+    s: sum x[y+1;z+ -1 0 1], x[y;z + -1 1], x[y-1;z+ -1 0 1];
+    if[a=0;  $[s>=30;:10;:0]];
+    if[a=10; $[3<=s mod 10;:1;:10]];
+    if[a=1;  $[(s>10)&0<s mod 10;:1;:0]];
+ };
+
+.aoc.d16.t1: {[data;minutes]
+    data: (".#|"!0 1 10) data;
+    .tmp.data: data;
+    {
+        if[x=y;:y];
+        .tmp.data: .aoc.d16.nextAcr[.tmp.data;;]'[;til count .tmp.data 0]'[til count .tmp.data];
+        y+1
+    }[minutes]/[0];
+    product: prd {sum count each where each .tmp.data=x}each 1 10;
+    delete data from `.tmp;
+    product
+ };
+
+
+//Task 2: use above code to find repeatable pattern
+.aoc.d16.t2: {[data;minutes]
+    data: (".#|"!0 1 10) data;
+    .tmp.data: data;
+
+    //process first 1000 entries and memorize the last one
+    {
+        if[x=y;:y];
+        .tmp.data: .aoc.d16.nextAcr[.tmp.data;;]'[;til count .tmp.data 0]'[til count .tmp.data];
+        y+1
+    }[1000]/[0];
+    .tmp.data1000: .tmp.data;
+
+    //search for next entry same to 1000th and return period back
+    period: {
+        if[x=y;:y];
+        .tmp.data: .aoc.d16.nextAcr[.tmp.data;;]'[;til count .tmp.data 0]'[til count .tmp.data];
+        if[.tmp.data1000~.tmp.data;:y];
+        y+1
+    }[minutes-1000]/[0];
+
+    //check next entry which corresponds to given minute with period
+    minutes: (minutes-1000) mod period;
+    {
+        if[x=y;:y];
+        .tmp.data: .aoc.d16.nextAcr[.tmp.data;;]'[;til count .tmp.data 0]'[til count .tmp.data];
+        y+1
+    }[minutes]/[0];
+
+    product: prd {sum count each where each .tmp.data=x}each 1 10;
+    delete data, data1000 from `.tmp;
+    product
+ };

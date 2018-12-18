@@ -55,3 +55,9 @@ if[not 2018=.aoc.d14.t2[3 7;"59414"]; '"[AssertionException] .aoc.d13.t2 case 4"
 if[not 500=.aoc.d16.t1 3296#read0 hsym`$input.dir,"2018_16.input"; '"[AssertionException] .aoc.d16.t1 case 1"];
 if[not 533=.aoc.d16.t2[3296#read0 hsym`$input.dir,"2018_16.input";3298_read0 hsym`$input.dir,"2018_16.input"]
     ; '"[AssertionException] .aoc.d16.t2 case 1"];
+
+//------------------------------------
+//Task 18
+if[not 1147=.aoc.d18.t1[read0 hsym`$input.dir,"2018_18.input0";10]; '"[AssertionException] .aoc.d18.t1 case 1"];
+if[not 466312=.aoc.d18.t1[read0 hsym`$input.dir,"2018_18.input";10]; '"[AssertionException] .aoc.d18.t1 case 2"];
+if[not 176782=.aoc.d18.t2[read0 hsym`$input.dir,"2018_18.input";1000000000]; '"[AssertionException] .aoc.d18.t2 case 1"];
