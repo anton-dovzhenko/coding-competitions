@@ -570,12 +570,19 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
 
 //------------------------------------
 //Task 18
+// 0 is ground, 1 is lumberyard, 10 is tree
 .aoc.d16.nextAcr: {
     a: x[y;z];
-    s: sum x[y+1;z+ -1 0 1], x[y;z + -1 1], x[y-1;z+ -1 0 1];
-    if[a=0;  $[s>=30;:10;:0]];
-    if[a=10; $[3<=s mod 10;:1;:10]];
-    if[a=1;  $[(s>10)&0<s mod 10;:1;:0]];
+    s: sum x[y+1;z+ -1 0 1];
+    s+: sum x[y;z + -1 1];
+    s+: sum x[y-1;z+ -1 0 1];
+    $[a=0
+        ; $[s>=30;10;0]
+        ; $[a=10
+            ; $[3<=s mod 10;1;10]
+            //when a=1
+            ; $[(s>10)&0<s mod 10;1;0]]
+    ]
  };
 
 .aoc.d16.t1: {[data;minutes]
