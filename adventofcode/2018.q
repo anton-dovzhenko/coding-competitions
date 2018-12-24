@@ -632,3 +632,71 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
     delete data, data1000 from `.tmp;
     product
  };
+
+
+//------------------------------------
+//Task 22
+.aoc.d22.t1: {[r;c;depth]
+    .tmp.gi: r#enlist c#0N;
+    .tmp.gi[0]: (depth+16807*til c) mod 20183;
+    .tmp.gi[;0]: (depth+48271*til r) mod 20183;
+    {[x;y;c;r;d] .tmp.gi[y;x]: $[(y=r-1)&(x=c-1);d;d+.tmp.gi[y-1;x]*.tmp.gi[y;x-1]] mod 20183}[;;c;r;depth]'[1+til c-1]'[1+til r-1];
+    risk: sum sum .tmp.gi mod 3;
+    delete gi from `.tmp;
+    risk
+ };
+
+.graph.wg: {
+   x: flip x;
+   g: group x 0;
+   `v`e`w!(`u#key g;x[1]@/:value g;x[2]@/:value g)
+ };
+
+.graph.dijkstra: {[G;start;end]
+    S: enlist[start]!enlist 0;
+    while[not end in key S
+        ; S,: {[G;S]
+            v: key S;
+            i: G[`v]?v;
+            nextE: raze G[`e]i;
+            nextW: raze (G[`w]i) + (count each G[`e]i)#'(value S);
+            filter: where not nextE in v;
+            nextE: nextE@filter;
+            nextW: nextW@filter;
+            minW: min nextW;
+            nextV: nextE@first where nextW=minW;
+            enlist[nextV]!enlist min minW
+        }[G;S];
+    ];
+    S@end
+ };
+
+// rocky - 0; wet - 1; narrow - 2;
+// none - 0; gear - 1; torch - 2;
+.aoc.d22.regTool: 0 1 2! (1 2; 0 1; 0 2);
+
+
+.aoc.d22.t2: {[r;c;r1;c1;depth]
+    .tmp.gi: r#enlist c#0N;
+    .tmp.gi[0]: (depth+16807*til c) mod 20183;
+    .tmp.gi[;0]: (depth+48271*til r) mod 20183;
+    {[x;y;c1;r1;d] .tmp.gi[y;x]: $[(y=r1)&(x=c1);d;d+.tmp.gi[y-1;x]*.tmp.gi[y;x-1]] mod 20183}[;;c1;r1;depth]'[1+til c-1]'[1+til r-1];
+    .tmp.gi: .tmp.gi mod 3;
+
+    G: raze raze {[c;r;x;y]
+        adj: (x;y)+/:(-1 0;1 0;0 -1;0 1);
+        adj: adj where (adj[;0] within (0;c))&adj[;1] within (0;r);
+         raze{[v;a]
+            tv: .aoc.d22.regTool .tmp.gi . reverse v;
+            ta: .aoc.d22.regTool .tmp.gi . reverse a;
+            iv: (v[0]+v[1]*c)+tv*c*r;
+            av: (a[0]+a[1]*c)+ta*c*r;
+            w: {$[x[0]=x[1];1;8]}each tv cross ta;
+            (iv cross av),'w
+        }[(x;y)]'[adj]
+    }[c;r]'[til c]'[til r];
+    G: .graph.wg G;
+    distance: .graph.dijkstra[G;2*c*r;(2*c*r)+c1+r1*c];
+    delete gi from `.tmp;
+    distance
+ };
