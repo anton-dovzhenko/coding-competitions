@@ -1,0 +1,2 @@
+if[not 337=.aoc.d4.t1 read0 hsym`$input.dir,"2018_4.input"; '"[AssertionException] .aoc.d4.t1 case 1"];
+if[not 231=.aoc.d4.t2 read0 hsym`$input.dir,"2018_4.input"; '"[AssertionException] .aoc.d4.t2 case 1"];

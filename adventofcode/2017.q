@@ -18,3 +18,9 @@
     `long$0^c+1+abs r-(-1+0.5*side)
 
 }each 1 12 23 1024 361527
+
+flip `a`b!(1 2 3; 7 8 9)
+
+//Task 4
+.aoc.d4.t1: {sum {all 1>=count each group " " vs x} each x};
+.aoc.d4.t2: {sum {all 1>=count each group asc each " " vs x} each x};
