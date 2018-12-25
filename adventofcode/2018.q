@@ -700,3 +700,21 @@ velocities: {"J"$ ", "vs(x?">")#x:(1+x?"<")_x}each last each"velocity"vs/:data;
     delete gi from `.tmp;
     distance
  };
+
+
+//------------------------------------
+//Task 25
+.aoc.d25.t1: {
+    x: "J"$","vs/:x;
+    c: enlist x 0;
+    x: 1_x;
+    cc: 0;
+    while[0<count x;
+        n: any{3>=sum each abs x-\:y}[x]each c; //neighbours
+        wn: where n;
+        c,:x wn;
+        x: x where not n;
+        if[0=count wn; c: enlist x 0; x: 1_x; cc+:1]
+    ];
+    cc+1
+ };
