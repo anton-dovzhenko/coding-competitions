@@ -21,6 +21,39 @@
 
 flip `a`b!(1 2 3; 7 8 9)
 
+
+//------------------------------------
 //Task 4
 .aoc.d4.t1: {sum {all 1>=count each group " " vs x} each x};
 .aoc.d4.t2: {sum {all 1>=count each group asc each " " vs x} each x};
+
+
+//------------------------------------
+//Task 5
+.aoc.d5.t1: {[offsets]
+    offsets: "J"$offsets;
+    p: 0; //pointer
+    steps: 0;
+    while[p within (0;-1+count offsets);
+        np: p+offsets p; //nextPointer
+        offsets[p]+: 1;
+        p: np;
+        steps+: 1;
+    ];
+    steps
+ };
+
+
+.aoc.d5.t2: {[offsets]
+    offsets: "J"$offsets;
+    p: 0; //pointer
+    steps: 0;
+    while[p within (0;-1+count offsets);
+        offset: offsets p;
+        np: p+offset; //nextPointer
+        offsets[p]+: $[offset>=3;-1;1];
+        p: np;
+        steps+: 1;
+    ];
+    steps
+ };
