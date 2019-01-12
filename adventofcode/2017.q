@@ -86,3 +86,43 @@
     ];
     steps
  };
+
+
+//------------------------------------
+//Task 6
+.aoc.d6.t1: {
+    L: count x;
+    mult: `long$reverse 10 xexp til L;
+    conf: sum x * mult;
+    cache: `u#0#0N;
+    while[not conf in cache;
+        cache,: conf;
+        i: first where x=max x;
+        v: x@i;
+        x[i]: 0;
+        x: x + floor v%L;
+        x[(1+i+til mod[v;L]) mod L]+: 1;
+        conf: sum x * mult;
+    ];
+    count cache
+ };
+
+
+.aoc.d6.t2: {
+    L: count x;
+    mult: `long$reverse 10 xexp til L;
+    conf: sum x * mult;
+    cache: `u#0#0N;
+    seen: 0N;
+    while[not conf=seen;
+        if[(null seen)&conf in cache; seen: conf; seenIter: count cache];
+        cache,: conf;
+        i: first where x=max x;
+        v: x@i;
+        x[i]: 0;
+        x: x + floor v%L;
+        x[(1+i+til mod[v;L]) mod L]+: 1;
+        conf: sum x * mult;
+    ];
+    count[cache]-seenIter
+ };
