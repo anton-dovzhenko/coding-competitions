@@ -126,3 +126,53 @@
     ];
     count[cache]-seenIter
  };
+
+
+//------------------------------------
+//Task 7
+.aoc.d7.t1: {
+    x: (!) . flip{x: " -> " vs x; (`$first " " vs x 0;$[1<count x;`$", "vs x 1;0#`])} each x;
+    first key {
+        if[1=count x;:x];
+        del: key[x]@where 0=count each value x;
+        x: del _ x;
+        x: key[x]! {y except x}[del] each value x;
+        x
+    }/[x]
+ };
+
+
+.aoc.d7.t2: {
+
+    graph: (!) . flip{x: " -> " vs x; (`$first " " vs x 0;$[1<count x;`$", "vs x 1;0#`])} each x;
+    weights: {(`$x 0)!"J"$x 1}flip{ " (" vs first ")" vs x}each x;
+
+    // get root and cummulated weights
+    tuple: {
+        g: x 0;
+        w: x 1;
+        if[1=count g;:(g;w)];
+        del: key[g]@where 0=count each value g;
+        g: del _ g;
+        w[key g]+:sum each (del#w)@/:(value g);
+        g: key[g]! {y except x}[del] each value g;
+        (g;w)
+
+    }/[(graph;weights)];
+
+    root: first key tuple 0;
+    weightCum: tuple 1;
+
+    // get node to balance and un-balanced weight
+    tuple: {[g;w;r;d]
+        children: g@r;
+        cw: w@children;
+        if[1=count distinct cw;:(r;d)];
+        r: children first(value cw)@first where 1 =count each value cw: group cw;
+        d: (w@first children except r)-w@r;
+        .z.s[g;w;r;d]
+    }[graph;weightCum;root;0];
+
+     weights[tuple 0]+tuple 1
+
+ };

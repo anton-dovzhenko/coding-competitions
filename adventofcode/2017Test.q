@@ -24,3 +24,8 @@ if[not 4=.aoc.d6.t2 0 2 7 0; '
     "[AssertionException] .aoc.d6.t2 case 1"];
 if[not 1086=.aoc.d6.t2 5 1 10 0 1 7 13 14 3 12 8 10 7 12 0 6;
     '"[AssertionException] .aoc.d6.t2 case 2"];
+
+//------------------------------------
+//Task 7
+if[not `qibuqqg=.aoc.d7.t1 read0 hsym`$input.dir,"2017_7.input"; '"[AssertionException] .aoc.d7.t1 case 1"];
+if[not 1079=.aoc.d7.t2 read0 hsym`$input.dir,"2017_7.input"; '"[AssertionException] .aoc.d7.t2 case 1"];
