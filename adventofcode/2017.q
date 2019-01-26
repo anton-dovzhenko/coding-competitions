@@ -176,3 +176,41 @@
      weights[tuple 0]+tuple 1
 
  };
+
+
+//------------------------------------
+//Task 8
+.aoc.d8.t1: {
+    .tmp.dict: (0#`)!0#0N;
+    {
+        x: " "vs x;
+        v: `$x 0;
+        mult: $["inc"~x 1;1;-1];
+        i: "J"$x 2;
+        //Other way to evaluate if clause
+        //if[comp~"==";comp: "="];
+        //if[comp~"!=";comp: "<>"];
+        //clause: eval parse string[0^.tmp.dict`$x 4], comp, x 6;
+        clause: (first((`$("<";">";">=";"<=";"==";"!="))!({x<y};{x>y};{x>=y};{x<=y};{x=y};{not x=y})) `$x 5) . (0^.tmp.dict`$x 4;"J"$x 6);
+        if[clause;.tmp.dict[v]+:mult*i];
+    } each x;
+    m: max .tmp.dict;
+    delete dict from `.tmp;
+    m
+ };
+
+
+.aoc.d8.t2: {
+    .tmp.dict: (0#`)!0#0N;
+    .tmp.maxVal: 0;
+    {
+        x: " "vs x;
+        v: `$x 0;
+        inc: $["inc"~x 1;1;-1]*"J"$x 2;
+        clause: (first((`$("<";">";">=";"<=";"==";"!="))!({x<y};{x>y};{x>=y};{x<=y};{x=y};{not x=y})) `$x 5) . (0^.tmp.dict`$x 4;"J"$x 6);
+        if[clause;.tmp.dict[v]+: inc; .tmp.maxVal: .tmp.maxVal|.tmp.dict[v]];
+    } each x;
+    m: .tmp.maxVal;
+    delete dict, maxVal from `.tmp;
+    m
+ };
