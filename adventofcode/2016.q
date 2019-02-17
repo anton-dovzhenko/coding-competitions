@@ -25,3 +25,35 @@
     lines: group lines;
     sum abs key[lines]@first where 1<count each value lines
  };
+
+
+//------------------------------------
+//Task 2
+.aoc.d2.t1: {
+    x,: "\n";
+    x: {[x;y]
+        point: x 0;
+        if[y~"\n";:(point; x[1], enlist point);];
+        nextPoint: point + ("RLUD"!(0 1;0 -1;-1 0;1 0))y;
+        $[all nextPoint within 0 2
+            ; (nextPoint;x 1)
+            ; (point; x 1)
+        ]
+    } over enlist[(1 1;())], x;
+    raze string sum each (0 1) +/: x[1] * \: (3 1)
+ };
+
+
+.aoc.d2.t2: {
+    x,: "\n";
+    x: {[x;y]
+        point: x 0;
+        if[y~"\n";:(point; x[1], enlist point);];
+        nextPoint: point + ("RLUD"!(0 1;0 -1;-1 0;1 0))y;
+        $[nextPoint in (0 2; 1 1; 1 2; 1 3; 2 0; 2 1; 2 2; 2 3; 2 4; 3 1; 3 2; 3 3; 4 2)
+            ; (nextPoint;x 1)
+            ; (point; x 1)
+        ]
+    } over enlist[(2 0;())], x;
+    ((0 2; 1 1; 1 2; 1 3; 2 0; 2 1; 2 2; 2 3; 2 4; 3 1; 3 2; 3 3; 4 2)!"123456789ABCD")x 1
+ };
