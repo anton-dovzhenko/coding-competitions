@@ -10,3 +10,9 @@ if[4=.aoc.d1.t2"R8, R4, R4, R8"; '"[AssertionException] .aoc.d1.t2 case 1"];
 //Task 2
 if["1985"~.aoc.d2.t1"ULL\nRRDDD\nLURDL\nUUUUD" '"[AssertionException] .aoc.d2.t1 case 1"];
 if["5DB3"~.aoc.d2.t2"ULL\nRRDDD\nLURDL\nUUUUD"; '"[AssertionException] .aoc.d2.t2 case 1"];
+
+
+//------------------------------------
+//Task 3
+if[862=.aoc.d3.t1 read0 hsym`$input.dir,"2016_3.input"; '"[AssertionException] .aoc.d3.t1 case 1"];
+if[1577=.aoc.d3.t2 read0 hsym`$input.dir,"2016_3.input"; '"[AssertionException] .aoc.d3.t2 case 1"];

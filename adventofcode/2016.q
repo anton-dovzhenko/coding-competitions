@@ -57,3 +57,22 @@
     } over enlist[(2 0;())], x;
     ((0 2; 1 1; 1 2; 1 3; 2 0; 2 1; 2 2; 2 3; 2 4; 3 1; 3 2; 3 3; 4 2)!"123456789ABCD")x 1
  };
+
+
+//------------------------------------
+//Task 3
+.aoc.d3.parseInput: {
+ -1_{x where not null x} each "J"$"  " vs/: "\n" vs x
+ };
+
+
+.aoc.d3.t1: {
+    x: .aoc.d3.parseInput x;
+    sum {x: asc x; x[2]<x[0]+x[1]} each x
+ };
+
+
+.aoc.d3.t2: {
+    x: .aoc.d3.parseInput x;
+    sum {x: asc x; x[2]<x[0]+x[1]} each raze flip each 3 cut x
+ };
