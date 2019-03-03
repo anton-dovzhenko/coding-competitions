@@ -76,3 +76,39 @@
     x: .aoc.d3.parseInput x;
     sum {x: asc x; x[2]<x[0]+x[1]} each raze flip each 3 cut x
  };
+
+//------------------------------------
+//Task 4
+.aoc.d4.t1: {
+    x: "\n" vs x;
+    sum {
+        x: "-" vs x;
+        w: raze -1 _ x;
+        ID: "J"$first "[" vs last x;
+        checksum: -1_last "[" vs last x;
+        w: {desc (key x)!((neg `long$key[x])+1000*count each value x)}group w;
+        real: checksum~5#key w;
+        real*ID
+    } each x
+ };
+
+
+.aoc.d4.t2: {
+    x: "\n" vs x;
+    words: flip `w`ID ! flip {
+        x: "-" vs x;
+        w: raze -1 _ x;
+        ID: "J"$first "[" vs last x;
+        checksum: -1_last "[" vs last x;
+        w: {desc (key x)!((neg `long$key[x])+1000*count each value x)}group w;
+        real: checksum~5#key w;
+        $[real
+        ;[
+            x: " " sv -1 _ x;
+            x: {$[x=" ";x;`char$97+((-97+`long$x)+y) mod 26]}[;ID] each x;
+            (x;ID)]
+        ;("";0N)]
+    } each x;
+    select from words where not null ID, w like "northpole object storage"
+ };
+
