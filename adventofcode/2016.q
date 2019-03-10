@@ -112,3 +112,28 @@
     select from words where not null ID, w like "northpole object storage"
  };
 
+
+//------------------------------------
+//Task 5
+.aoc.d5.t1: {
+    password: "";
+    i: 0;
+    while[8>count password;
+        if[(md: raze string md5 phrase,string i) like "00000*"; password,: md 5];
+        i+:1
+    ];
+    password
+ };
+
+
+.aoc.d5.t2: {
+    password: 8#" ";
+    i: 0;
+    while[0<sum password=" ";
+        if[(md: raze string md5 x,string i) like "00000*";
+            if[md[5] in "01234567";
+                if[" "=password@"J"$md[5]; password["J"$md 5]: md 6]]];
+        i+:1
+        ];
+    password
+ };
