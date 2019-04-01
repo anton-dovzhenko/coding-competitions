@@ -137,3 +137,13 @@
         ];
     password
  };
+
+//------------------------------------
+//Task 6
+.aoc.d6.t1: {
+    raze {key[x] where min[i]=i:count each value x}each group each flip"\n" vs x
+ };
+
+.aoc.d6.t2: {
+    raze {key[x] where max[i]=i:count each value x}each group each flip"\n" vs x
+ };
