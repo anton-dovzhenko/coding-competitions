@@ -138,6 +138,7 @@
     password
  };
 
+
 //------------------------------------
 //Task 6
 .aoc.d6.t1: {
@@ -146,4 +147,30 @@
 
 .aoc.d6.t2: {
     raze {key[x] where max[i]=i:count each value x}each group each flip"\n" vs x
+ };
+
+
+//------------------------------------
+//Task 7
+.aoc.d7.t1: {
+    x: "\n" vs x;
+    sum {
+        x: raze"]" vs/:"[" vs x;
+        x: where {any {(x[y]=x[y+3])&(x[y+1]=x[y+2])&(x[y]<>x[y+1])}[x] each til 0|-3+count x} each x;
+        (any mod[x;2]=0)& not any mod[x;2]=1
+    } each x
+ };
+
+
+.aoc.d7.t2: {
+    x: "\n" vs x;
+    sum {
+        x: raze"]" vs/:"[" vs x;
+        x1: x@2*til `long$0.5*count x;
+        x2: x@1+2*til `long$0.5*count x;
+        aba: {where ((-2_x)=2_x)&(-2_x)<>1_-1_x};
+        x1: raze {[aba;x] i:aba x; (x@i),'x@i+1}[aba]each x1;
+        x2: raze {[aba;x] i:aba x; (x@i+1),'x@i}[aba]each x2;
+        0<count x1 inter x2
+    } each x
  };
