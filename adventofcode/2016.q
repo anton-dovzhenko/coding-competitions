@@ -174,3 +174,31 @@
         0<count x1 inter x2
     } each x
  };
+
+
+//------------------------------------
+//Task 8
+.aoc.d8.t1: {
+   x: "\n" vs x;
+   actions:  {
+        if[x like "rect*"; :({x[til z;til y]: not x[til z;til y]; x};"J"$"x" vs (count"rect ")_x)];
+        if[x like "rotate row*"; :({x[y]: neg[z] rotate x[y]; x};"J"$"by" vs (count"rotate row y=")_x)];
+        if[x like "rotate column*"; :({x[;y]: neg[z] rotate x[;y]; x};"J"$"by" vs (count"rotate column x=")_x)];
+        '"[IllegalArgumentException]"
+    } each x;
+    m: 50 cut (6 * 50)#0b;
+    sum sum each {y[0] . (enlist[x],y[1])}over(enlist[m], actions)
+ };
+
+
+.aoc.d8.t2: {
+   x: "\n" vs x;
+   actions:  {
+        if[x like "rect*"; :({x[til z;til y]: not x[til z;til y]; x};"J"$"x" vs (count"rect ")_x)];
+        if[x like "rotate row*"; :({x[y]: neg[z] rotate x[y]; x};"J"$"by" vs (count"rotate row y=")_x)];
+        if[x like "rotate column*"; :({x[;y]: neg[z] rotate x[;y]; x};"J"$"by" vs (count"rotate column x=")_x)];
+        '"[IllegalArgumentException]"
+    } each x;
+    m: 50 cut (6 * 50)#0b;
+    "\n"sv (01b!"~#") {y[0] . (enlist[x],y[1])}over(enlist[m], actions)
+ };
