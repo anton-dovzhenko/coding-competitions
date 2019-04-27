@@ -202,3 +202,32 @@
     m: 50 cut (6 * 50)#0b;
     "\n"sv (01b!"~#") {y[0] . (enlist[x],y[1])}over(enlist[m], actions)
  };
+
+
+//------------------------------------
+//Task 20
+.aoc.d20.getBlackList: {
+   x: "J"$"-"vs/:"\n" vs x;
+   1_{
+       l: last x;
+       $[y[0] <= l[1]+1
+           ; x[-1+count x;1]: y[1] | l[1]
+           ; x,: enlist y
+       ];
+       x
+   } over (enlist enlist -0W -0W),asc x
+ };
+
+
+
+.aoc.d20.t1: {
+    bl: .aoc.d20.getBlackList x;
+    bl[0;1]+1
+ };
+
+
+.aoc.d20.t2: {
+    bl: .aoc.d20.getBlackList x;
+    4294967296 - (last deltas sum bl)+count bl
+ };
+
