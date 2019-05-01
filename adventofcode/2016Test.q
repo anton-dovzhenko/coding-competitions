@@ -58,3 +58,10 @@ vntsnd
 vrdear
 dvrsen
 enarar"; '"[AssertionException] .aoc.d6.t1 case 2"];
+
+//------------------------------------
+//Task 19
+if[not 3 ~ .aoc.d19.t1 5; '"[AssertionException] .aoc.d19.t1 case 1"];
+if[not 1842613 ~ .aoc.d19.t1 3018458; '"[AssertionException] .aoc.d19.t1 case 2"];
+if[not 2 ~ .aoc.d19.t2 5; '"[AssertionException] .aoc.d19.t2 case 1"];
+if[not 1424135 ~ .aoc.d19.t2 3018458; '"[AssertionException] .aoc.d19.t2 case 2"];

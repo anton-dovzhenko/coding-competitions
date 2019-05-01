@@ -205,6 +205,49 @@
 
 
 //------------------------------------
+//Task 19
+.aoc.d19.t1: {
+    first {
+        i: til count x;
+        odd: mod[count x;2] = 1;
+        x: x where mod[i;2] = 0;
+        $[odd;last[x],-1_x;x]
+    } over 1+til x
+ };
+
+
+// Idea is to always keep available elements split in 2.
+// Where first half starting from active element goes to first queue, and rest to second.
+.aoc.d19.t2: {
+    x: 1 + til x;
+    l: ceiling 0.5*count x;
+    x1: l#x;
+    x2: l _ x;
+    s1: 0;
+    s2: 0;
+    while[1<count[x1]-s1;
+        $[(count[x1]-s1)>count[x2]-s2;
+            [
+                x1[-1+count x1]: x2[s2];
+                x2 ,: x1[s1];
+                s1 +: 1;
+                s2 +: 1;
+
+            ];
+            [
+                s2 +: 1;
+                x1 ,: x2[s2];
+                s2 +: 1;
+                x2 ,: x1[s1];
+                s1 +: 1
+            ];
+        ]
+    ];
+    last x1
+ };
+
+
+//------------------------------------
 //Task 20
 .aoc.d20.getBlackList: {
    x: "J"$"-"vs/:"\n" vs x;
