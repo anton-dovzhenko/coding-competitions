@@ -122,3 +122,62 @@ input: (!). flip{
 attenders: (distinct raze key input),`me;
 permutations: {raze {[y;x] i:til 1+count x; ((i#\:x),'y),'i _\:x}[y]each x} over enlist[(attenders 0 1;attenders 1 0)],2_attenders;
 max{sum x@/: (reverse each y),y:(y,'(1_y),y 0)}[input]each permutations
+
+
+//------------------------------------
+//Task 14
+.aoc.d14.t1: {[x;time]
+    x: "\n" vs x;
+    x: {x: " " vs x; ("J"$x 3;"J"$x 6;"J"$x 13) } each x;
+    max{[time;reideer]
+        speed: reideer 0;
+        fly: reideer 1;
+        rest: reideer 2;
+        cycles: floor time%fly+rest;
+        travelled: cycles * fly;
+        travelled+: fly&mod[time;fly+rest];
+        travelled*: speed;
+        travelled
+    }[time]'[x]
+ };
+
+
+.aoc.d14.t2: {[x;time]
+    x: "\n" vs x;
+    x: flip `speed`fly`rest!flip {x: " " vs x; ("J"$x 3;"J"$x 6;"J"$x 13) } each x;
+    x: update mode: 1b, timeLeft: fly, distance: 0, score: 0 from x;
+    do[time; x: {
+        //switch mode if neccessary
+        x: update switch: 1b from x where timeLeft=0;
+        x: update mode: not mode from x where switch;
+        x: update timeLeft: ?[mode;fly;rest] from x where switch;
+        x: delete switch from x;
+
+        //update distance and scores
+        x: update distance: distance+speed from x where mode;
+        x[`timeLeft]-: 1;
+        x: update score: score+1 from x where distance=max distance;
+        x
+    }x];
+    max x`score
+ };
+
+//Faster functional form
+.aoc.d14.t2: {[x;time]
+    x: "\n" vs x;
+    x: flip `speed`fly`rest!flip {x: " " vs x; ("J"$x 3;"J"$x 6;"J"$x 13) } each x;
+    x: update mode: 1b, timeLeft: fly, distance: 0, score: 0 from x;
+    do[time; x: {
+        //switch mode if neccessary
+        switch: 0=x`timeLeft;
+        x[`mode]: ?[switch;not x`mode;x`mode];
+        x[`timeLeft]: ?[switch;?[x`mode;x`fly;x`rest];x`timeLeft];
+
+        //update distance and scores
+        x[`distance]+: x[`mode]*x`speed;
+        x[`timeLeft]-: 1;
+        x[`score]+: x[`distance]=max x[`distance];
+        x
+    }x];
+    max x`score
+ };
