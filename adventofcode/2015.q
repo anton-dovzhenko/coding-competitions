@@ -181,3 +181,27 @@ max{sum x@/: (reverse each y),y:(y,'(1_y),y 0)}[input]each permutations
     }x];
     max x`score
  };
+
+
+//------------------------------------
+//Task 15
+// Brute-force
+.aoc.d15.t1: {
+    x: flip "J"${last each" " vs/:x}each "," vs/: "\n" vs x;
+    x: -1 _ x;
+    .tmp.max: 0;
+    {[x;a;b;c;d] .tmp.max|: $[100=a+b+c+d;prd 0|sum each x*\:(a;b;c;d);0]}
+        [x]'[til 101]'[til 101]'[til 101]'[til 101];
+    .tmp.max
+ };
+
+
+.aoc.d15.t2: {
+    x: flip "J"${last each" " vs/:x}each "," vs/: "\n" vs x;
+    calories: last x;
+    x: -1 _ x;
+    .tmp.max: 0;
+    {[x;cal;a;b;c;d] .tmp.max|: $[(100=a+b+c+d)&500=sum cal*(a;b;c;d);prd 0|sum each x*\:(a;b;c;d);0]}
+        [x;calories]'[til 101]'[til 101]'[til 101]'[til 101];
+    .tmp.max
+ };
