@@ -205,3 +205,48 @@ max{sum x@/: (reverse each y),y:(y,'(1_y),y 0)}[input]each permutations
         [x;calories]'[til 101]'[til 101]'[til 101]'[til 101];
     .tmp.max
  };
+
+
+//------------------------------------
+//Task 16
+.aoc.d16.parse: {
+    x: "\n" vs x;
+    update sue: i+1 from (uj/) {
+        ci: first x?":";
+        x: (ci+1) _ x;
+        x: {flip(`$x 0)!enlist each "J"$x 1}flip ": " vs/: ", " vs x;
+        x
+    }each x
+ };
+
+
+.aoc.d16.t1: {
+    x: .aoc.d16.parse x;
+    exec sue from x where
+        ((children=3)|null children)
+        &((cats=7)|null cats)
+        &((samoyeds=2)|null samoyeds)
+        &((pomeranians=3)|null pomeranians)
+        &((akitas=0)|null akitas)
+        &((vizslas=0)|null vizslas)
+        &((goldfish=5)|null goldfish)
+        &((trees=3)|null trees)
+        &((cars=2)|null cars)
+        &((perfumes=1)|null perfumes)
+ };
+
+.aoc.d16.t2: {
+    x: .aoc.d16.parse x;
+    exec sue from x where
+        ((children=3)|null children)
+        &((cats>7)|null cats)
+        &((samoyeds=2)|null samoyeds)
+        &((pomeranians<3)|null pomeranians)
+        &((akitas=0)|null akitas)
+        &((vizslas=0)|null vizslas)
+        &((goldfish<5)|null goldfish)
+        &((trees>3)|null trees)
+        &((cars=2)|null cars)
+        &((perfumes=1)|null perfumes)
+ };
+
