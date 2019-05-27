@@ -250,3 +250,29 @@ max{sum x@/: (reverse each y),y:(y,'(1_y),y 0)}[input]each permutations
         &((perfumes=1)|null perfumes)
  };
 
+//------------------------------------
+//Task 17
+.aoc.d17.t1: {
+    c: "J"$"\n" vs x;
+    sum {[x;c]
+        if[x = 0; :1];
+        if[(x < 0)|count[c]=0; :0];
+        x1: x - last c;
+        c: -1 _ c;
+        .z.s[x1;c], .z.s[x;c]
+    }[150;c]
+ };
+
+
+.aoc.d17.t2: {
+    c: "J"$"\n" vs x;
+    c: {[x;c;n]
+        if[x = 0; :n];
+        if[(x < 0)|count[c]=0; :0W];
+        x1: x - last c;
+        c: -1 _ c;
+        .z.s[x1;c;n+1], .z.s[x;c;n]
+    }[150;c;0];
+    sum c=min c
+ };
+
