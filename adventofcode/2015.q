@@ -250,6 +250,7 @@ max{sum x@/: (reverse each y),y:(y,'(1_y),y 0)}[input]each permutations
         &((perfumes=1)|null perfumes)
  };
 
+
 //------------------------------------
 //Task 17
 .aoc.d17.t1: {
@@ -276,3 +277,35 @@ max{sum x@/: (reverse each y),y:(y,'(1_y),y 0)}[input]each permutations
     sum c=min c
  };
 
+
+//------------------------------------
+//Task 18
+.aoc.d18.t1: {
+    x: (".#"!01b)"\n" vs x;
+    neighbours: (-1 0 1 cross -1 0 1) except enlist 0 0;
+    do[100;
+        x: flip {[neighbours;x;i;j]
+            s: sum x ./:(i;j)+/:neighbours;
+            $[x[i;j]=1;s in 2 3; s=3]
+        }[neighbours;x]'[til count x]'[til count first x]
+    ];
+    sum sum x
+ };
+
+
+.aoc.d18.t2: {
+    x: (".#"!01b)"\n" vs x;
+    neighbours: (-1 0 1 cross -1 0 1) except enlist 0 0;
+    x[0;0]: 1b;
+    x[0;99]: 1b;
+    x[99;0]: 1b;
+    x[99;99]: 1b;
+    do[100;
+        x: flip {[neighbours;x;i;j]
+             if[(i;j) in 0 99 cross 0 99; :1b];
+            s: sum x ./:(i;j)+/:neighbours;
+            $[x[i;j]=1;s in 2 3; s=3]
+        }[neighbours;x]'[til count x]'[til count first x]
+    ];
+    sum sum x
+ };
