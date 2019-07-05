@@ -9,12 +9,11 @@ public class _135CandyTest {
 
     @Test
     public void testCandy() throws Exception {
-        assertEquals(1, new _135Candy().candy(new int[]{0}));
-        assertEquals(6, new _135Candy().candy(new int[]{1, 2, 3}));
-        assertEquals(15, new _135Candy().candy(new int[]{1, 1, 2, 2, 3, 3, 3}));
-
-        assertEquals(5, new _135Candy().candy(new int[]{3, 1, 2}));
-        assertEquals(6, new _135Candy().candy(new int[]{3, 1, 1, 2}));
-        assertEquals(9, new _135Candy().candy(new int[]{4, 5, 6, 1, 1, 1}));
+        assertEquals(5, new _135Candy().candy(new int[]{1, 0, 2}));
+        assertEquals(4, new _135Candy().candy(new int[]{1, 2, 2}));
+        assertEquals(7, new _135Candy().candy(new int[]{1, 3, 2, 2, 1}));
+        assertEquals(13, new _135Candy().candy(new int[]{1, 2, 87, 87, 87, 2, 1}));
+        assertEquals(9, new _135Candy().candy(new int[]{1, 2, 3, 1, 0}));
+        assertEquals(4, new _135Candy().candy(new int[]{2, 1, 1}));
     }
 }
