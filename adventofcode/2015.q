@@ -309,3 +309,35 @@ max{sum x@/: (reverse each y),y:(y,'(1_y),y 0)}[input]each permutations
     ];
     sum sum x
  };
+
+
+//------------------------------------
+//Task 20
+.aoc.d20.t1: {
+    p: 0;
+    h: 0;
+    while[p < x
+        ; 0N!(h;p)
+        ; h+: 1
+        ; p: {
+            divisors: divisors@where 0 = x mod divisors: 1+til floor sqrt x;
+            10*sum distinct `long$divisors, x%divisors
+        } h
+    ];
+    h
+ };
+
+.aoc.d20.t2: {
+    p: 0;
+    h: 0;
+    while[p < x
+        ; 0N!(h;p)
+        ; h+: 1
+        ; p: {
+            divisors: divisors@where 0 = x mod divisors: 1+til floor sqrt x;
+            divisors: distinct `long$divisors, x%divisors;
+            divisors: divisors where 50>=x%divisors;
+            11*sum divisors
+        } h
+    ];
+ };
