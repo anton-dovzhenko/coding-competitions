@@ -1,4 +1,7 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by anton on 8/10/18.
@@ -7,39 +10,35 @@ public class _115DistinctSubsequences {
 
 
     public int numDistinct(String s, String t) {
-        Map<Character, Set<Integer>> states = new HashMap<>();
-        Map<Integer, Integer> paths = new HashMap<>();
+        int[] counts = new int[t.length()];
+        Map<Character, List<Integer>> pointers = new HashMap<>();
 
-        states.put(t.charAt(0), new HashSet<>(Arrays.asList(0)));
-        paths.put(0, 0);
-        System.out.println("------");
-        System.out.println(states);
-        System.out.println(paths);
+        //reversed order is crucial for last loop
+        for (int i = t.length() - 1; i >= 0; i--) {
+            char c = t.charAt(i);
+            List<Integer> indices = pointers.get(c);
+            if (indices == null) {
+                indices = new ArrayList<>();
+                pointers.put(c, indices);
+            }
+            indices.add(i);
+        }
+
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            System.out.println("------ " + c + "------");
-            Set<Integer> indices = states.get(c);
+            List<Integer> indices = pointers.get(c);
             if (indices != null) {
-                for (int index : indices) {
-                    int count = paths.get(index);
-                    paths.put(index, count + 1);
-                    if (index < t.length() - 1) {
-                        paths.put(index + 1, paths.getOrDefault(index + 1, 0) + 1);
-                        char next = t.charAt(index + 1);
-                        Set<Integer> nextIndices = states.get(next);
-                        if (nextIndices == null) {
-                            nextIndices = new HashSet<>();
-                            states.put(next, nextIndices);
-                        }
-                        nextIndices.add(index + 1);
+                for (int j : indices) {
+                    if (j == 0) {
+                        counts[0]++;
+                    } else if (counts[j - 1] > 0) {
+                        counts[j] += counts[j - 1];
                     }
                 }
             }
-            System.out.println(states);
-            System.out.println(paths);
-            //if (states.containsKey(c))
         }
-        return paths.getOrDefault(t.length() - 1, 0);
+
+        return counts[counts.length - 1];
     }
 
 }
