@@ -341,3 +341,63 @@ max{sum x@/: (reverse each y),y:(y,'(1_y),y 0)}[input]each permutations
         } h
     ];
  };
+
+
+//------------------------------------
+//Task 21
+
+.aoc.d21.t1: {
+    w: flip (8 10 25 40 74; 4 5 6 7 8; 0 0 0 0 0);
+    a: flip (0 13 31 53 75 102; 0 0 0 0 0 0; 0 1 2 3 4 5);
+    r: flip (0 25 50 100 20 40 80; 0 1 2 3 0 0 0; 0 0 0 0 1 2 3);
+    min {[me;boss;bossDamage;bossArmor;player]
+        w: player 0 1 2;
+        a: player 3 4 5;
+        r1: player 6 7 8;
+        r2: player 9 10 11;
+        if[(r1~r2)&not r1~0 0 0;:0W];
+        damage: w[1]+r1[1]+r2[1];
+        armor: a[2]+r1[2]+r2[2];
+        attackerMe: 1b; //1b - me, 0b - boss;
+        while[(me>0)&boss>0
+            ; $[attackerMe
+                ; boss: boss-1|damage-bossArmor
+                ; me: me - 1|bossDamage-armor
+            ]
+            ; attackerMe: not attackerMe
+        ];
+        $[0<me
+            ; w[0]+a[0]+r1[0]+r2[0]
+            ; 0W
+        ]
+    }[100;104;8;1] each w cross a cross r cross r
+ };
+
+
+.aoc.d21.t2: {
+    w: flip (8 10 25 40 74; 4 5 6 7 8; 0 0 0 0 0);
+    a: flip (0 13 31 53 75 102; 0 0 0 0 0 0; 0 1 2 3 4 5);
+    r: flip (0 25 50 100 20 40 80; 0 1 2 3 0 0 0; 0 0 0 0 1 2 3);
+    max {[me;boss;bossDamage;bossArmor;player]
+        w: player 0 1 2;
+        a: player 3 4 5;
+        r1: player 6 7 8;
+        r2: player 9 10 11;
+        if[(r1~r2)&not r1~0 0 0;:-0W];
+        damage: w[1]+r1[1]+r2[1];
+        armor: a[2]+r1[2]+r2[2];
+        attackerMe: 1b; //1b - me, 0b - boss;
+        while[(me>0)&boss>0
+            ; $[attackerMe
+                ; boss: boss-1|damage-bossArmor
+                ; me: me-1|bossDamage-armor
+            ]
+            ; attackerMe: not attackerMe
+        ];
+        $[0<me
+            ; -0W
+            ; w[0]+a[0]+r1[0]+r2[0]
+        ]
+    }[100;104;8;1] each w cross a cross r cross r
+
+ };
