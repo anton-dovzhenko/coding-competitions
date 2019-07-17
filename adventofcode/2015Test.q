@@ -24,7 +24,13 @@
 if[not 1304=.aoc.d17.t1 .aoc.d17.input; '"[AssertionException] .aoc.d17.t1 case 1"];
 if[not 18=.aoc.d17.t2 .aoc.d17.input; '"[AssertionException] .aoc.d17.t2 case 1"];
 
+
 //------------------------------------
 //Task 21
 if[not 78=.aoc.d21.t1`; '"[AssertionException] .aoc.d21.t1 case 1"];
 if[not 148=.aoc.d21.t2`; '"[AssertionException] .aoc.d21.t2 case 1"];
+
+
+//------------------------------------
+//Task 23
+if[not 0=.aoc.d23.t1 "inc a\njio a, +2\ntpl a\ninc a"; '"[AssertionException] .aoc.d23.t1 case 1"];

@@ -401,3 +401,34 @@ max{sum x@/: (reverse each y),y:(y,'(1_y),y 0)}[input]each permutations
     }[100;104;8;1] each w cross a cross r cross r
 
  };
+
+
+
+//------------------------------------
+//Task 23
+
+.aoc.d23.t0: {[r;x]
+    x: "\n"vs x;
+    x: " " vs/:x;
+    i: 0;
+    while[i within (0;-1+count x)
+        ; instruction: x@i
+        ; cmd: (
+            ("hlf";"tpl";"inc";"jmp";"jie";"jio")!(
+                {[r;ri] ri: `int$ri like "b*"; r[ri]: floor 0.5*r[ri]; (r; 1)}
+                ; {[r;ri] ri: `int$ri like "b*"; r[ri]: 3*r[ri]; (r; 1)}
+                ; {[r;ri] ri: `int$ri like "b*"; r[ri]: r[ri]+1; (r; 1)}
+                ; {[r;offset] (r; "J"$offset)}
+                ; {[r;ri;offset] ri: `int$ri like "b*"; (r; $[0=r[ri] mod 2;"J"$offset;1])}
+                ; {[r;ri;offset] ri: `int$ri like "b*"; (r; $[1=r[ri];"J"$offset;1])}
+            )
+        ) instruction 0
+        ; result: cmd . enlist[r], 1 _ instruction
+        ; r: result 0
+        ; i: i + result 1
+    ];
+    last r
+ };
+
+.aoc.d23.t1: .aoc.d23.t0[0 0];
+.aoc.d23.t2: .aoc.d23.t0[1 0];
