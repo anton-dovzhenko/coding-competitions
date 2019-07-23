@@ -1,4 +1,10 @@
 //------------------------------------
+//Task 8
+if[not 1350=.aoc.d8.t1 read0 hsym`$input.dir,"2015_8.input"; '"[AssertionException] .aoc.d8.t1 case 1"];
+if[not 2085=.aoc.d8.t2 read0 hsym`$input.dir,"2015_8.input"; '"[AssertionException] .aoc.d8.t2 case 1"];
+
+
+//------------------------------------
 //Task 17
 .aoc.d17.input: "33
 14

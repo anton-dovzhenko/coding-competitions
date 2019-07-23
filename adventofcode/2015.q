@@ -62,6 +62,30 @@ sum {?[((floor I%1000) within y[1][0 2])&mod[I;1000] within y[1][1 3];y[0]@x;x]}
 ;"NOT y -> i")
 
 
+//------------------------------------
+//Task 8
+.aoc.d8.t1: {
+    sum[count each x] -
+    sum {
+        cnt: 0;
+        bs: 0b;
+        while[0<count x;
+            c: first x;
+            x: 1 _ x;
+            $[bs;
+                [bs: 0b; if[c~"x"; x: 2_ x]];
+                [cnt +: 1; bs: c~"\\"]
+            ]
+        ];
+        cnt - 2
+    } each x
+ };
+
+
+.aoc.d8.t2: {sum[{2+count[x]+sum x in ("\\";"\"")} each x] - sum count each x};
+
+
+
 //Task 9.1
 input: read0 hsym`$"2015_t9_p1.in";
 input: {x, (reverse each key x)!value x} {x[0]!x 1}flip{x:" to " vs x; c0: `$x 0; x: " = " vs x 1; (c0,`$x 0;"J"$x 1)} each input;
