@@ -430,7 +430,6 @@ max{sum x@/: (reverse each y),y:(y,'(1_y),y 0)}[input]each permutations
 
 //------------------------------------
 //Task 23
-
 .aoc.d23.t0: {[r;x]
     x: "\n"vs x;
     x: " " vs/:x;
@@ -456,3 +455,30 @@ max{sum x@/: (reverse each y),y:(y,'(1_y),y 0)}[input]each permutations
 
 .aoc.d23.t1: .aoc.d23.t0[0 0];
 .aoc.d23.t2: .aoc.d23.t0[1 0];
+
+
+//------------------------------------
+//Task 24
+.aoc.d24.t0: {[data;N]
+    s: sum data;
+    t: `int$s%N;
+
+    data: desc data;
+    buckets: enlist 0;
+
+    res: {[t;buckets;data]
+        buckets: buckets,/:data;
+        SS: sum each buckets;
+        if[any t=SS; :buckets where t=SS];
+        indices: where t>SS;
+        raze .z.s[t]'[buckets @ indices; (indices+1) _ \:data]
+
+    }[t;buckets;data];
+
+    res: 1_'res;
+    min prd each res where (count each res)=min count each res
+ };
+
+.aoc.d24.t1: .aoc.d24.t0[;3];
+.aoc.d24.t2: .aoc.d24.t0[;4];
+
