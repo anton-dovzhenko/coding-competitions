@@ -29,38 +29,41 @@ sum {?[((floor I%1000) within y[1][0 2])&mod[I;1000] within y[1][1 3];y[0]@x;x]}
 sum {?[((floor I%1000) within y[1][0 2])&mod[I;1000] within y[1][1 3];y[0]@x;x]} over (1000000#0;({x+1};489,959,759,964);({0|x-1};820,516,871,914);({x+2};120,314,745,489))
 
 
-//Task 7.1
-.aoc.toBinary: {((16-count x)#0b),x:`boolean$2 vs/:"J"$x};
-.aoc.operations: ("NOT";"AND";"OR";"LSHIFT";"RSHIFT")!(
-  {not x}
-  ;{x&y}
-  ;{x|y}
-  ;{x,$[1=type y;2 sv y;y]#0b}
-  ;{(neg $[1=type y;2 sv y;y])_ x}
-);
-.aoc.getVal: {$[any y~/:key x;x@y;.aoc.toBinary y]};
+//------------------------------------
+//Task 7
+.aoc.d7.bitwise: {x: 2 vs x; y: 2 vs y; cnt: max count each (x;y); 2 sv z[((cnt-count x)#0), x; ((cnt-count y)#0), y]};
+.aoc.d7.band: .aoc.d7.bitwise[;;&];
+.aoc.d7.bor: .aoc.d7.bitwise[;;|];
+.aoc.d7.lshift: {2 sv (2 vs x),y#0};
+.aoc.d7.rshift: {2 sv neg[y] _ 2 vs x};
+.aoc.d7.bnot: {2 sv not ((16-count x)#0), x:2 vs x};
 
-{x:1_x;asc([]first each key x;2 sv/:value x)}
-{[x;y]
-  y: " -> "vs y;
-  s: " " vs y 0;    //statement
-  v: y 1;           //variable
-  x, enlist[v]!enlist
-  $[1=count s
-    ;.aoc.toBinary s 0
-    ; $[2=count s
-      ; .aoc.operations["NOT"] .aoc.getVal[x;s 1]
-      ; (.aoc.operations s 1) . .aoc.getVal[x]each s 0 2
-    ]
-  ]
-}over({enlist[x]!x}enlist[::];"123 -> x";"456 -> y"
-;"x AND y -> d"
-;"x OR y -> e"
-;"x LSHIFT 2 -> f"
-;"y RSHIFT 2 -> g"
-;"NOT x -> h"
-;"NOT y -> i")
+.aoc.d7.t1: {[data;x]
+    .aoc.d7.data: "\n" vs data;
+    .aoc.d7.data: {(`$x 1)!x 0} flip " -> " vs/:.aoc.d7.data;
+    .aoc.d7.cache: enlist[`]!enlist`long$();
+    res: {
+        expr: .aoc.d7.data x;
 
+        if[x in key .aoc.d7.cache; :.aoc.d7.cache x];
+        if[not x in key .aoc.d7.data; :"J"$string x];
+        res: "J"$expr;
+        if[not null res; .aoc.d7.cache[x]: res; :res];
+
+        subexpr: " "vs expr;
+        if[expr like "* AND *"; .aoc.d7.cache[x]: .aoc.d7.band . .z.s each `$subexpr 0 2];
+        if[expr like "* OR *"; .aoc.d7.cache[x]: .aoc.d7.bor . .z.s each `$subexpr 0 2];
+        if[expr like "* LSHIFT *"; .aoc.d7.cache[x]: .aoc.d7.lshift . (.z.s `$subexpr 0;"J"$subexpr 2)];
+        if[expr like "* RSHIFT *"; .aoc.d7.cache[x]: .aoc.d7.rshift . (.z.s `$subexpr 0;"J"$subexpr 2)];
+        if[expr like "NOT *"; .aoc.d7.cache[x]: .aoc.d7.bnot .z.s `$subexpr 1];
+        if[not x in key .aoc.d7.cache; .aoc.d7.cache[x]: .z.s `$expr];
+        .aoc.d7.cache x
+    } x;
+    delete data, cache from `.aoc.d7;
+    res
+ };
+
+.aoc.d7.t2: .aoc.d7.t1;
 
 //------------------------------------
 //Task 8
