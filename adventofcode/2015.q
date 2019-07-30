@@ -112,6 +112,32 @@ encode0: {d:where 0<>deltas x; raze (1_deltas d,count x),'x@d};
 count {[x;y]encode0 x}over enlist["J"$/:"1113122113"], til 50
 
 
+//------------------------------------
+//Task 11
+.aoc.d11.t1: {
+    alphabet: {x!til count x}.Q.a;
+    alphabet2: value[alphabet]!key alphabet;
+    nextPassword: {x: reverse 1 _ {$[26=x;y+1;y]} scan (26, reverse x); x[where x=26]: 0; x};
+    check1: {any(1 1)~/:(deltas -1 _ x),'(deltas[1 _ x])};
+    check2: {not any x in y}[alphabet"iol"];
+    check3: {1<count distinct x where (-1_x)=1_x};
+
+    password: alphabet x;
+    checked: 0b;
+    while[not checked;
+        password: nextPassword password;
+        checked: check1 password;
+        if[checked; checked: check2 password];
+        if[checked; checked: check3 password];
+    ];
+
+    (value[alphabet]!key alphabet) password
+ };
+
+
+.aoc.d11.t2: {.aoc.d11.t1 .aoc.d11.t1 x};
+
+
 //Task 12.1
 6 3 0 0~{sum"J"$" "vs?[x in "\":,{}[]";" ";x]}each("{\"a\":2,\"b\":4}";"{\"a\":{\"b\":4},\"c\":-1}";"{\"a\":[-1,1]}";"[-1,{\"a\":1}]")
 //Task 12.2 not efficient at all. Complexity must be O(n)

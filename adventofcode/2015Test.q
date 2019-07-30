@@ -3,6 +3,10 @@
 if[not 1350=.aoc.d8.t1 read0 hsym`$input.dir,"2015_8.input"; '"[AssertionException] .aoc.d8.t1 case 1"];
 if[not 2085=.aoc.d8.t2 read0 hsym`$input.dir,"2015_8.input"; '"[AssertionException] .aoc.d8.t2 case 1"];
 
+//------------------------------------
+//Task 11
+if[not "hxbxxyzz"~.aoc.d11.t1 "hxbxwxba"; '"[AssertionException] .aoc.d11.t1 case 1"];
+if[not "hxcaabcc"~.aoc.d11.t2 "hxbxwxba"; '"[AssertionException] .aoc.d11.t2 case 1"];
 
 //------------------------------------
 //Task 17
