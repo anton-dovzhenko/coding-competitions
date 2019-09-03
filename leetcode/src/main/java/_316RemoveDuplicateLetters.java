@@ -1,3 +1,5 @@
+import apple.laf.JRSUIUtils;
+
 import java.util.*;
 
 /**
@@ -5,53 +7,62 @@ import java.util.*;
  */
 public class _316RemoveDuplicateLetters {
 
+    private int[] min = new int[26];
+    private int[] max = new int[26];
+
     public String removeDuplicateLetters(String s) {
-        TreeMap<Character, LinkedList<Integer>> map = new TreeMap<>();
-        for (int i = 0; i < s.length(); i++) {
+        StringBuilder distinct = new StringBuilder();
+        while (!s.isEmpty()) {
+            int i = getFirstCharIndex(s);
             char c = s.charAt(i);
-            LinkedList<Integer> positions = map.get(c);
-            if (positions == null) {
-                positions = new LinkedList<>();
-                map.put(c, positions);
-            }
-            positions.add(i);
-        }
-        StringBuilder sb = new StringBuilder();
-        Stack<Character> stack = new Stack<Character>();
-        while (!map.isEmpty()) {
-            if (stack.isEmpty()) {
-                stack.add(map.firstKey());
-            } else {
-                char c = stack.peek();
-                int min = map.get(c).getFirst();
-                boolean allowed = true;
-                for (Map.Entry<Character, LinkedList<Integer>> e : map.entrySet()) {
-                    if (e.getValue().getLast() < min) {
-                        allowed = false;
-                        break;
-                    }
-                }
-
-                if (allowed) {
-                    stack.pop();
-                    sb.append(c);
-                    map.remove(c);
-                    for (Map.Entry<Character, LinkedList<Integer>> e : map.entrySet()) {
-                        Iterator<Integer> iterator = e.getValue().iterator();
-                        while (iterator.hasNext()) {
-                            if (iterator.next() < min) {
-                                iterator.remove();
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-                } else {
-
+            StringBuilder next = new StringBuilder();
+            for (int k = i + 1; k < s.length(); k++) {
+                if (s.charAt(k) != c) {
+                    next.append(s.charAt(k));
                 }
             }
+            s = next.toString();
+            distinct.append(c);
         }
-        return sb.toString();
+        return distinct.toString();
     }
+
+    private int getFirstCharIndex(String s) {
+        int minIndex = Integer.MAX_VALUE;
+        Arrays.fill(min, Integer.MAX_VALUE);
+        Arrays.fill(max, Integer.MIN_VALUE);
+        for (int i = 0; i < s.length(); i++) {
+            int index = s.charAt(i) - 'a';
+            minIndex = Math.min(minIndex, index);
+            min[index] = Math.min(min[index], i);
+            max[index] = Math.max(max[index], i);
+        }
+
+        boolean isFirst = true;
+        for (int i = minIndex + 1; i < 26; i++) {
+            if (max[i] != Integer.MIN_VALUE && max[i] < min[minIndex]) {
+                isFirst = false;
+                break;
+            }
+        }
+
+        if (isFirst) {
+            return min[minIndex];
+        } else {
+            boolean[] lookup = new boolean[26];
+            for (int i = 0; i < min[minIndex]; i++) {
+                lookup[s.charAt(i) - 'a'] = true;
+            }
+            StringBuilder substring = new StringBuilder();
+            for (int i = 0; i < s.length(); i++) {
+                if (lookup[s.charAt(i) - 'a']) {
+                    substring.append(s.charAt(i));
+                }
+            }
+            return getFirstCharIndex(substring.toString());
+        }
+
+    }
+
 
 }
