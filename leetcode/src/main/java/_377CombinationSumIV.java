@@ -1,27 +1,36 @@
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by anton on 14/5/18.
  */
 public class _377CombinationSumIV {
 
+    private final Map<Integer, Integer> cache = new HashMap<>();
+
     public int combinationSum4(int[] nums, int target) {
         Arrays.sort(nums);
-        return combinationSum4(nums, target, 0);
+        return combinationSum40(nums, target);
     }
 
-    private int combinationSum4(int[] nums, int target, int offset) {
-        Arrays.sort(nums);
-        int count = 0;
-        for (int i = offset; i < nums.length; i++) {
-            if (nums[i] == target) {
-                count++;
-            } else if (nums[i] < target) {
-                count += combinationSum4(nums, target - nums[i], i + 1);
-            } else {
+    private int combinationSum40(int[] nums, int target) {
+        if (cache.containsKey(target)) {
+            return cache.get(target);
+        }
+        int sum = 0;
+        for (int n : nums) {
+            int res = target - n;
+            if (res < 0) {
                 break;
+            } else if (res == 0) {
+                sum += 1;
+            } else {
+                sum += combinationSum4(nums, res);
             }
         }
-        return count;
+        cache.put(target, sum);
+        return sum;
     }
+
 }
