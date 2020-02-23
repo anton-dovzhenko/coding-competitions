@@ -1,6 +1,3 @@
-import java.util.LinkedList;
-import java.util.List;
-
 public class _402RemoveKDigits {
 
     public String removeKdigits(String num, int k) {
