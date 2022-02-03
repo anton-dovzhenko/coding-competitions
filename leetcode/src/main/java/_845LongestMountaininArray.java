@@ -29,10 +29,4 @@ public class _845LongestMountaininArray {
         return (int) ((up + down) * Math.signum(up) * Math.signum(down));
     }
 
-    public static void main(String... args) {
-        System.out.println(new _845LongestMountaininArray().longestMountain(new int[]{2, 1, 4, 7, 3, 2, 5}));
-        System.out.println(new _845LongestMountaininArray().longestMountain(new int[]{2, 2, 2}));
-        System.out.println(new _845LongestMountaininArray().longestMountain(new int[]{875, 884, 239, 731, 723, 685}));
-    }
-
 }
