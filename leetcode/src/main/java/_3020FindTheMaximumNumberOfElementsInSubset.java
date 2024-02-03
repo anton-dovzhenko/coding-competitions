@@ -42,12 +42,4 @@ public class _3020FindTheMaximumNumberOfElementsInSubset {
         return ones % 2 == 0 ? ones - 1 : ones;
     }
 
-    public static void main(String... args) {
-        System.out.println(new _3020FindTheMaximumNumberOfElementsInSubset().maximumLength(new int[]{5, 4, 1, 2, 2}));
-        System.out.println(new _3020FindTheMaximumNumberOfElementsInSubset().maximumLength(new int[]{1, 3, 2, 4}));
-        System.out.println(new _3020FindTheMaximumNumberOfElementsInSubset().maximumLength(new int[]{1, 1}));
-        System.out.println(new _3020FindTheMaximumNumberOfElementsInSubset().maximumLength(
-                new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024}));
-    }
-
 }
