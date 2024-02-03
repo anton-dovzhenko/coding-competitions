@@ -6,7 +6,7 @@ public class _3019NumberOfChangingKeysTest {
 
     @Test
     public void countKeyChanges() {
-        assertEquals(new _3019NumberOfChangingKeys().countKeyChanges("aAbBcC"), 2);
-        assertEquals(new _3019NumberOfChangingKeys().countKeyChanges("bBBb"), 0);
+        assertEquals(2, new _3019NumberOfChangingKeys().countKeyChanges("aAbBcC"));
+        assertEquals(0, new _3019NumberOfChangingKeys().countKeyChanges("bBBb"));
     }
 }
