@@ -1,4 +1,4 @@
-public class _3033_ModifyTheMatrix {
+public class _3033ModifyTheMatrix {
 
     public int[][] modifiedMatrix(int[][] matrix) {
         for (int j = 0; j < matrix[0].length; j++) {
