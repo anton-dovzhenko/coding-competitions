@@ -16,10 +16,4 @@ public class _3075MaximizeHappinessOfSelectedChildren {
         return h;
     }
 
-    public static void main(String ... args) {
-        System.out.println(new _3075MaximizeHappinessOfSelectedChildren().maximumHappinessSum(new int[]{1,2,3}, 2));
-        System.out.println(new _3075MaximizeHappinessOfSelectedChildren().maximumHappinessSum(new int[]{1,1,1,1}, 2));
-        System.out.println(new _3075MaximizeHappinessOfSelectedChildren().maximumHappinessSum(new int[]{2,3,4,5}, 1));
-    }
-
 }
