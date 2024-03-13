@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>google-jam</module>
+        <module>hackerrank</module>
         <module>leetcode</module>
         <module>topcoder</module>
     </modules>
